@@ -1,0 +1,49 @@
+#include "pch.h"
+#include "ConfigLoader.h"
+
+
+ConfigLoader::ConfigLoader(const std::string& folder)
+	: m_pData{ new ConfigData{} }
+	, m_Buffer{}
+{
+	const int bufferSize{ 100 };
+	m_Buffer.resize(bufferSize);
+	std::memset(m_Buffer.data(), 0, bufferSize);
+
+	std::string engineFile{ folder + "Engine.ini" };
+
+	LoadConfigData("Window", "Width", "640", engineFile);
+	m_pData->window.width = std::stof(m_Buffer.data());
+
+	LoadConfigData("Window", "Height", "480", engineFile);
+	m_pData->window.height = std::stof(m_Buffer.data());
+
+	LoadConfigData("Window", "Title", "Programming 4 assignment", engineFile);
+	m_pData->window.title = m_Buffer.data();
+
+	LoadConfigData("Memory", "FrameAllocSize", "1024", engineFile);
+	m_pData->memory.frameAllocSize = std::stoi(m_Buffer.data());
+}
+
+ConfigData ConfigLoader::GetConfigData() {
+
+	return *m_pData;
+}
+
+void ConfigLoader::LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath) {
+	
+	auto size = GetPrivateProfileString(title.c_str(), data.c_str(), "", m_Buffer.data(), DWORD(m_Buffer.size()), filePath.c_str());
+
+	if (size == 0) {
+
+		// write default value
+		WritePrivateProfileString(title.c_str(), data.c_str(), defaultValue.c_str(), filePath.c_str());
+		GetPrivateProfileString(title.c_str(), data.c_str(), "", m_Buffer.data(), DWORD(m_Buffer.size()), filePath.c_str());
+	}
+}
+
+
+ConfigLoader::~ConfigLoader()
+{
+	delete m_pData;
+}
