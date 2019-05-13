@@ -2,14 +2,13 @@
 #include "Engine.h"
 #include "ConfigLoader.h"
 #include "DoubleLinkAllocator.h"
+#include "Game.h"
 
 #include <SDL.h>
 #include <chrono>
 
 void Engine::Initialize()
 {
-	std::cout << sizeof(size_t) << std::endl << sizeof(DoubleLinkAllocator::Block);
-
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
@@ -40,24 +39,17 @@ void Engine::Initialize()
 	m_Renderer.Initialize(m_pWindow);
 }
 
-void Engine::LoadGame() const {
-
-	
-}
-
 void Engine::Cleanup() {
 
 	SDL_DestroyWindow(m_pWindow);
 	SDL_Quit();
 }
 
-void Engine::Run() {
+void Engine::Run(Game* pGame) {
 
 	Logger logger = Logger();
 	Locator::Provide(&logger);
 	Initialize();
-
-	LoadGame();
 
 	// local scope to auto "delete" local variables to this scope
 	{
@@ -68,6 +60,8 @@ void Engine::Run() {
 		Locator::Provide(&time);
 		Locator::Provide(&inputHandler);
 		Locator::Provide(&sceneManager);
+
+		pGame->LoadGame();
 
 		bool continueGame{ true };
 		auto previousTime = std::chrono::high_resolution_clock::now();

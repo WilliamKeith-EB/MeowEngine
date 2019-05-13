@@ -37,9 +37,3 @@ T* GameObject::GetComponent() const {
 
 	return nullptr;
 }
-
-template<>
-RenderComponent* GameObject::GetComponent<RenderComponent>() const {
-
-	return m_pRenderComponent;
-}

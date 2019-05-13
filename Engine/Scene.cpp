@@ -2,8 +2,10 @@
 #include "Scene.h"
 
 
-Scene::Scene()
+Scene::Scene(const std::string& name)
 	: m_ComponentPool{1024}
+	, m_Name{ name }
+	, m_pRenderComponents{ new RenderComponent[50]}
 {
 }
 

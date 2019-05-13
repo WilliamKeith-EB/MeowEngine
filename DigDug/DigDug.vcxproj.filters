@@ -15,15 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="MainScene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DigDugGame.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="DigDug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DigDug.cpp">
+    <ClCompile Include="MainScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

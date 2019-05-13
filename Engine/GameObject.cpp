@@ -54,3 +54,9 @@ Scene* GameObject::GetScene() const {
 
 	return m_pScene;
 }
+
+template<>
+RenderComponent* GameObject::GetComponent<RenderComponent>() const {
+
+	return m_pRenderComponent;
+}

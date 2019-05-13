@@ -10,7 +10,7 @@ class Scene
 	friend class GameObject;
 
 public:
-	Scene();
+	explicit Scene(const std::string& name);
 	virtual ~Scene();
 
 	virtual void Update();

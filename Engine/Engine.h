@@ -2,6 +2,7 @@
 #include "Renderer.h"
 
 struct SDL_Window;
+class Game;
 
 class Engine final {
 
@@ -16,9 +17,8 @@ public:
 	Engine& operator=(Engine&& other) noexcept = delete;
 
 	void Initialize();
-	void LoadGame() const;
 	void Cleanup();
-	void Run();
+	void Run(Game* pGame);
 
 private:
 	SDL_Window* m_pWindow;

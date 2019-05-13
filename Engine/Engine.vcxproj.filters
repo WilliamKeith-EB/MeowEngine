@@ -54,9 +54,6 @@
     <ClCompile Include="Time.cpp">
       <Filter>Header Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Header Files\Debug</Filter>
     </ClCompile>
@@ -90,6 +87,9 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Header Files\Content</Filter>
     </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -103,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files\Debug</Filter>
@@ -142,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header Files\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

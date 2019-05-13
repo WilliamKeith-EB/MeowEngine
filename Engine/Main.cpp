@@ -1,3 +1,5 @@
+// COPY THE CODE BELOW IN THE MAIN FILE OF THE GAME PROJECT
+
 #include "pch.h"
 #pragma comment(lib, "xinput.lib")
 
@@ -10,7 +12,7 @@
 int main(int argc, char* argv[]) {
 #pragma warning( pop )
 
-	Engine engine{};
-	engine.Run();
+	//Engine engine{};
+	//engine.Run();
 	return 0;
 }
