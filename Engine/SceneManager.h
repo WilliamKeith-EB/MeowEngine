@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include <unordered_map>
 
 class Scene;
 
@@ -18,6 +18,6 @@ public:
 
 private:
 	Scene* m_pActiveScene;
-	std::map<std::string, Scene*> m_pScenes;
+	std::unordered_map<std::string, Scene*> m_pScenes;
 };
 

@@ -10,9 +10,9 @@ public:
 
 	void LoadGame() override {
 
-		MainScene* main = new MainScene{};
+		MainScene* mainScene = new MainScene{};
 
-		SCENEMANAGER.AddScene(main);
+		SCENEMANAGER.AddScene(mainScene);
 		SCENEMANAGER.SetSceneActive("Main");
 	}
 };

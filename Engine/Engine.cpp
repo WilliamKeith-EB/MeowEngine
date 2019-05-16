@@ -41,6 +41,9 @@ void Engine::Initialize()
 
 void Engine::Cleanup() {
 
+	auto& frameAllocator = FRAMEALLOC;
+	delete &frameAllocator;
+
 	SDL_DestroyWindow(m_pWindow);
 	SDL_Quit();
 }
@@ -66,6 +69,7 @@ void Engine::Run(Game* pGame) {
 		bool continueGame{ true };
 		auto previousTime = std::chrono::high_resolution_clock::now();
 		while (continueGame) {
+			FRAMEALLOC.Reset(); // reset the frame allocator -> clear the buffer
 
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			time.m_DeltaT = std::chrono::duration<float>(currentTime - previousTime).count();
