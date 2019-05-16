@@ -55,6 +55,17 @@ Scene* GameObject::GetScene() const {
 	return m_pScene;
 }
 
+void * GameObject::operator new(size_t size) {
+
+	return FRAMEALLOC.Acquire(size);
+}
+
+void GameObject::operator delete(void * ptr) {
+	
+	//if(!FRAMEALLOC.IsInStack(ptr))
+	//	((GameObject*)ptr)->GetScene()->m
+}
+
 template<>
 RenderComponent* GameObject::GetComponent<RenderComponent>() const {
 

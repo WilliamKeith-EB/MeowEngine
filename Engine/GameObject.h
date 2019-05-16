@@ -16,6 +16,9 @@ public:
 	void AddToScene(Scene* pScene);
 	Scene* GetScene() const;
 
+	void* operator new(size_t size);
+	void operator delete(void* ptr);
+
 private: 
 	std::vector<Component*> m_pComponents;
 	RenderComponent* m_pRenderComponent;
