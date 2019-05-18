@@ -14,6 +14,7 @@ public:
 	explicit Scene(const std::string& name);
 	virtual ~Scene();
 
+	virtual void Initialize() = 0;
 	virtual void Update();
 
 	std::string GetName() const;

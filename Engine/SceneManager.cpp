@@ -28,7 +28,10 @@ void SceneManager::AddScene(Scene * pScene) {
 	if (!succes.second) {
 
 		LOGGER.LogWarning("Scene: " + pScene->GetName() + " couldn't be added to the scenemanager because an entry with that name already exists.");
+		return;
 	}
+
+	pScene->Initialize();
 }
 
 void SceneManager::SetSceneActive(const std::string& name) {

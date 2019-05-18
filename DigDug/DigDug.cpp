@@ -15,5 +15,8 @@ int main(int argc, char* argv[]) {
 	DigDugGame* pGame = new DigDugGame{};
 
 	engine.Run(pGame);
+
+	delete pGame;
+
 	return 0;
 }

@@ -5,7 +5,7 @@
 Scene::Scene(const std::string& name)
 	: m_ComponentPool{1024}
 	, m_Name{ name }
-	, m_pRenderComponents{ new RenderComponent[50]}
+	, m_pRenderComponents{ (RenderComponent*) malloc(sizeof(RenderComponent) * 50) }
 	, m_pGameObjects{ (GameObject*) malloc(sizeof(GameObject) * 60) }
 {
 }
@@ -13,7 +13,7 @@ Scene::Scene(const std::string& name)
 
 Scene::~Scene()
 {
-	delete[] m_pRenderComponents;
+	free(m_pRenderComponents);
 	free(m_pGameObjects);
 }
 
@@ -28,7 +28,7 @@ std::string Scene::GetName() const
 
 RenderComponent* Scene::AddRenderComponent(RenderComponent* pRenderComponent) {
 
-	m_pRenderComponents[m_NrOfRenderComponents++] = *pRenderComponent;
+	memcpy(&m_pGameObjects[m_NrOfGameObjects++], pRenderComponent, sizeof(RenderComponent));
 	return &m_pRenderComponents[m_NrOfRenderComponents - 1];
 }
 
@@ -41,7 +41,7 @@ void Scene::RemoveRenderComponent(RenderComponent* pRenderComponent) {
 
 void Scene::AddGameObject(GameObject* pGameObject) {
 
-	m_pGameObjects[m_NrOfGameObjects++] = *pGameObject;
+	memcpy(&m_pGameObjects[m_NrOfGameObjects++], pGameObject, sizeof(GameObject));
 }
 
 void Scene::RemoveGameObject(GameObject* pGameObject) {

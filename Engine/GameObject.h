@@ -5,7 +5,7 @@ class RenderComponent;
 class GameObject final
 {
 public:
-	GameObject(const std::string& name);
+	GameObject(const std::string& name = "");
 	~GameObject();
 
 	void AddComponent(Component* pComponent);
@@ -36,7 +36,7 @@ T* GameObject::GetComponent() const {
 			return pActual;
 	}
 
-	LOGGER.LogError(m_Name + " doesn't have a component of type " + typeid(T).name);
+	LOGGER.LogError(m_Name + " doesn't have a component of type " + typeid(T).name());
 
 	return nullptr;
 }

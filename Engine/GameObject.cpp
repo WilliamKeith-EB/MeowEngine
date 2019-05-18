@@ -5,6 +5,7 @@
 GameObject::GameObject(const std::string& name)
 	: m_Name{ name } {
 
+	AddComponent(new TransformComponent());
 }
 
 // TODO: delete children
@@ -22,6 +23,7 @@ void GameObject::AddComponent(Component* pComponent) {
 	}
 
 	m_pComponents.push_back(pComponent);
+	pComponent->AddToGameObject(this);
 }
 
 void GameObject::AddComponent(RenderComponent* pComponent) {
@@ -47,8 +49,8 @@ void GameObject::AddToScene(Scene* pScene) {
 	for (Component*& pComponent : m_pComponents) {
 
 		auto pBuffer = pComponent;
-		pComponent = reinterpret_cast<Component*>(m_pScene->m_ComponentPool.Acquire(sizeof(pComponent)));
-		*pComponent = *pBuffer;
+		pComponent = reinterpret_cast<Component*>(m_pScene->m_ComponentPool.Acquire(pComponent->GetMemSize()));
+		memcpy(pComponent, pBuffer, pBuffer->GetMemSize());
 	}
 
 	pScene->AddGameObject(this);

@@ -33,10 +33,6 @@
     <Filter Include="Header Files\Memory">
       <UniqueIdentifier>{1e03afa4-364f-42ab-baf5-353ada16aeb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -89,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="Locator.cpp">
       <Filter>Header Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Header Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="Locator.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
