@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "Time.h"
 
-float Time::GetDeltaT() const {
+float  meow::Time::GetDeltaT() const {
 
 	return m_DeltaT;
 }
 
-float Time::GetFPS() const {
+float  meow::Time::GetFPS() const {
 
 	return m_FPS;
 }

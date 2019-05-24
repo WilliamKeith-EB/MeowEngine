@@ -1,47 +1,52 @@
 #pragma once
-class Component;
-class RenderComponent;
-class TransformComponent;
 
-class GameObject final
-{
-public:
-	GameObject(const std::string& name = "");
-	~GameObject();
+namespace meow {
 
-	Component* AddComponent(Component* pComponent);
-	void AddComponent(RenderComponent* pRenderComponent);
-	template<class T>
-	T* GetComponent() const;
+	class Component;
+	class RenderComponent;
+	class TransformComponent;
 
-	template<>
-	RenderComponent* GetComponent<RenderComponent>() const {
+	class GameObject final
+	{
+	public:
+		GameObject(const std::string& name = "");
+		~GameObject();
 
-		return m_pRenderComponent;
-	}
+		Component* AddComponent(Component* pComponent);
+		void AddComponent(RenderComponent* pRenderComponent);
+		template<class T>
+		T* GetComponent() const;
 
-	template<>
-	TransformComponent* GetComponent<TransformComponent>() const {
+		template<>
+		RenderComponent* GetComponent<RenderComponent>() const {
 
-		return m_pTransformComponent;
-	}
+			return m_pRenderComponent;
+		}
 
-	void AddToScene(Scene* pScene);
-	Scene* GetScene() const;
-	const std::string& GetName() const { return m_Name; }
+		template<>
+		TransformComponent* GetComponent<TransformComponent>() const {
 
-	void Update();
+			return m_pTransformComponent;
+		}
 
-private: 
-	std::vector<Component*> m_pComponents;
-	TransformComponent* m_pTransformComponent;
-	RenderComponent* m_pRenderComponent;
-	std::string m_Name;
-	Scene* m_pScene;
-};
+		void AddToScene(Scene* pScene);
+		Scene* GetScene() const;
+		const std::string& GetName() const { return m_Name; }
+
+		void Update();
+
+	private:
+		std::vector<Component*> m_pComponents;
+		TransformComponent* m_pTransformComponent;
+		RenderComponent* m_pRenderComponent;
+		std::string m_Name;
+		Scene* m_pScene;
+	};
+
+}
 
 template<class T>
-T* GameObject::GetComponent() const {
+T* meow::GameObject::GetComponent() const {
 
 	for (Component* pComponent : m_pComponents) {
 

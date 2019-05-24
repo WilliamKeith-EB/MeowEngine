@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "SceneManager.h"
 
-SceneManager::SceneManager(Renderer& renderer)
+meow::SceneManager::SceneManager(Renderer& renderer)
 	: m_Renderer{ renderer } {
 
 }
 
-SceneManager::~SceneManager() {
+meow::SceneManager::~SceneManager() {
 
 	for (auto scenePair : m_pScenes) {
 
@@ -14,13 +14,13 @@ SceneManager::~SceneManager() {
 	}
 }
 
-void SceneManager::Update() {
+void meow::SceneManager::Update() {
 
 	assert(m_pActiveScene);
 	m_pActiveScene->RootUpdate();
 }
 
-void SceneManager::AddScene(Scene* pScene) {
+void meow::SceneManager::AddScene(Scene* pScene) {
 
 	auto succes = m_pScenes.emplace(std::make_pair(pScene->GetName(), pScene));
 
@@ -33,13 +33,13 @@ void SceneManager::AddScene(Scene* pScene) {
 	pScene->RootInitialize();
 }
 
-void SceneManager::SetSceneActive(const std::string& name) {
+void meow::SceneManager::SetSceneActive(const std::string& name) {
 
 	m_pActiveScene = m_pScenes[name];
 	m_Renderer.SetRenderComponents(m_pActiveScene->m_pRenderComponents, m_pActiveScene->m_NrOfRenderComponents);
 }
 
-Scene* SceneManager::GetActiveScene() const {
+meow::Scene* meow::SceneManager::GetActiveScene() const {
 
 	return m_pActiveScene;
 }

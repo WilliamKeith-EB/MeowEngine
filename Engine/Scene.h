@@ -1,38 +1,41 @@
 #pragma once
 
-class RenderComponent;
-class GameObject;
+namespace meow {
 
-class Scene
-{
-	friend class RenderComponent;
-	friend class GameObject;
-	friend class SceneManager;
+	class RenderComponent;
+	class GameObject;
 
-public:
-	explicit Scene(const std::string& name);
-	virtual ~Scene();
+	class Scene
+	{
+		friend class RenderComponent;
+		friend class GameObject;
+		friend class SceneManager;
 
-	void RootInitialize();
-	virtual void Initialize() = 0;
-	void RootUpdate();
-	virtual void Update() = 0;
+	public:
+		explicit Scene(const std::string& name);
+		virtual ~Scene();
 
-	std::string GetName() const;
-	GameObject* FindGameObjectWithName(const std::string& name);
+		void RootInitialize();
+		virtual void Initialize() = 0;
+		void RootUpdate();
+		virtual void Update() = 0;
 
-private:
-	std::string m_Name;
+		std::string GetName() const;
+		GameObject* FindGameObjectWithName(const std::string& name);
 
-	std::vector<GameObject*> m_pGameObjects;
+	private:
+		std::string m_Name;
 
-	RenderComponent* m_pRenderComponents;
-	int m_NrOfRenderComponents;
+		std::vector<GameObject*> m_pGameObjects;
 
-	RenderComponent* AddRenderComponent(RenderComponent* pRenderComponent);
-	void RemoveRenderComponent(RenderComponent* pRenderComponent);
+		RenderComponent* m_pRenderComponents;
+		int m_NrOfRenderComponents;
 
-	void AddGameObject(GameObject* pObject);
-	void RemoveGameObject(GameObject* pObject);
-};
+		RenderComponent* AddRenderComponent(RenderComponent* pRenderComponent);
+		void RemoveRenderComponent(RenderComponent* pRenderComponent);
 
+		void AddGameObject(GameObject* pObject);
+		void RemoveGameObject(GameObject* pObject);
+	};
+
+}

@@ -1,24 +1,27 @@
 #pragma once
 
-class StackAllocator
-{
-public:
-	StackAllocator(const StackAllocator& other) = delete;
-	StackAllocator(StackAllocator&& other) noexcept = delete;
-	StackAllocator& operator=(const StackAllocator& other) = delete;
-	StackAllocator& operator=(StackAllocator&& other) noexcept = delete;
+namespace meow {
 
-	explicit StackAllocator(size_t sizeInBytes);
-	~StackAllocator();
+	class StackAllocator
+	{
+	public:
+		StackAllocator(const StackAllocator& other) = delete;
+		StackAllocator(StackAllocator&& other) noexcept = delete;
+		StackAllocator& operator=(const StackAllocator& other) = delete;
+		StackAllocator& operator=(StackAllocator&& other) noexcept = delete;
 
-	void* Acquire(size_t nbBytes);
-	void Reset();
+		explicit StackAllocator(size_t sizeInBytes);
+		~StackAllocator();
 
-	size_t GetFreeSpaceAmount() const;
-	bool IsInStack(void* ptr) const;
+		void* Acquire(size_t nbBytes);
+		void Reset();
 
-private:
-	char* m_StackPointer;
-	char* m_OriginalMemory;
-	size_t m_Size;
-};
+		size_t GetFreeSpaceAmount() const;
+		bool IsInStack(void* ptr) const;
+
+	private:
+		char* m_StackPointer;
+		char* m_OriginalMemory;
+		size_t m_Size;
+	};
+}

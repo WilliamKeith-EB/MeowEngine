@@ -1,25 +1,28 @@
 #pragma once
 #include "Texture2D.h"
 
-class GameObject;
+namespace meow {
 
-class RenderComponent final
-{
-	friend class Renderer;
+	class GameObject;
 
-public:
-	explicit RenderComponent(const Texture2D& texture);
-	~RenderComponent() = default;
+	class RenderComponent final
+	{
+		friend class Renderer;
 
-	void AddToGameObject(GameObject* pGameObject);
-	GameObject* GetGameObject() const {	return m_pGameObject; }
+	public:
+		explicit RenderComponent(Texture2D* pTexture);
+		~RenderComponent() = default;
 
-	void* operator new(size_t size);
-	void operator delete(void* ptr);
-private:
-	GameObject* m_pGameObject;
-	Texture2D m_Texture;
+		void AddToGameObject(GameObject* pGameObject);
+		GameObject* GetGameObject() const { return m_pGameObject; }
 
-	void Render();
-};
+		void* operator new(size_t size);
+		void operator delete(void* ptr);
+	private:
+		GameObject* m_pGameObject;
+		Texture2D* m_pTexture;
 
+		void Render();
+	};
+
+}

@@ -2,7 +2,7 @@
 #include "Texture2D.h"
 
 
-Texture2D::Texture2D(const std::string& path)
+meow::Texture2D::Texture2D(const std::string& path)
 {
 	SDL_Surface* pSurface = IMG_Load(path.c_str());
 
@@ -60,12 +60,12 @@ Texture2D::Texture2D(const std::string& path)
 }
 
 
-Texture2D::~Texture2D() {
+meow::Texture2D::~Texture2D() {
 
 	SDL_DestroyTexture(m_pTexture);
 }
 
-void Texture2D::Render(const glm::mat4x4& transformationMatrix) {
+void meow::Texture2D::Render(const glm::mat4x4& transformationMatrix) {
 
 	glPushMatrix();
 

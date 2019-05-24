@@ -38,6 +38,7 @@
 #include "StackAllocator.h"
 #include "ConfigLoader.h"
 #include "Texture2D.h"
+#include "ResourceManager.h"
 
 #pragma warning(push)
 #pragma warning (disable:4201)

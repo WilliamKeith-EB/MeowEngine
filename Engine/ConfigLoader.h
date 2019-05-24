@@ -1,36 +1,38 @@
 #pragma once
 #include <string>
 
-struct ConfigData {
+namespace meow {
 
-	struct {
+	struct ConfigData {
 
-		float width, height;
-		std::string title;
-		bool useVSync;
-	} window;
+		struct {
 
-	struct {
+			float width, height;
+			std::string title;
+			bool useVSync;
+		} window;
 
-		size_t frameAllocSize;
-		int maxNumberOfRenderComponents;
-		int gameObjectArrayStartSize;
-	} memory;
-	// run with or without console
-};
+		struct {
 
-class ConfigLoader final
-{
-public:
+			size_t frameAllocSize;
+			int maxNumberOfRenderComponents;
+			int gameObjectArrayStartSize;
+		} memory;
+		// run with or without console
+	};
 
-	ConfigLoader(const std::string& folder);
-	~ConfigLoader();
+	class ConfigLoader final
+	{
+	public:
 
-	ConfigData GetConfigData();
-private:
-	ConfigData* m_pData;
-	std::vector<char> m_Buffer;
+		ConfigLoader(const std::string& folder);
+		~ConfigLoader();
 
-	void LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath);
-};
+		ConfigData GetConfigData();
+	private:
+		ConfigData* m_pData;
+		std::vector<char> m_Buffer;
 
+		void LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath);
+	};
+}

@@ -1,9 +1,12 @@
 #pragma once
 #include "Scene.h"
 
-class GameObject;
+namespace meow {
 
-class MainScene final : public Scene
+	class CameraComponent;
+}
+
+class MainScene final : public meow::Scene
 {
 public:
 	MainScene();
@@ -14,6 +17,6 @@ public:
 
 private:
 	float m_TimePassed;
-	CameraComponent* m_pCam01, *m_pCam02;
+	meow::CameraComponent* m_pCam01, *m_pCam02;
 };
 

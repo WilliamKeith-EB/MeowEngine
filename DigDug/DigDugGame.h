@@ -4,7 +4,7 @@
 #include "Locator.h"
 #include "SceneManager.h"
 
-class DigDugGame : public Game {
+class DigDugGame : public meow::Game {
 
 public:
 

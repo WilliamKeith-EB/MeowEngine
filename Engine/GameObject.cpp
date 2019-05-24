@@ -2,14 +2,14 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(const std::string& name)
+meow::GameObject::GameObject(const std::string& name)
 	: m_Name{ name } {
 
 	AddComponent(new TransformComponent());
 }
 
 // TODO: delete children
-GameObject::~GameObject() {
+meow::GameObject::~GameObject() {
 
 	for (Component* pComponent : m_pComponents) {
 
@@ -17,7 +17,7 @@ GameObject::~GameObject() {
 	}
 }
 
-Component* GameObject::AddComponent(Component* pComponent) {
+meow::Component* meow::GameObject::AddComponent(Component* pComponent) {
 
 	TransformComponent* isTransform = dynamic_cast<TransformComponent*>(pComponent);
 	if (isTransform)
@@ -37,7 +37,7 @@ Component* GameObject::AddComponent(Component* pComponent) {
 	return pComponent;
 }
 
-void GameObject::AddComponent(RenderComponent* pComponent) {
+void meow::GameObject::AddComponent(RenderComponent* pComponent) {
 
 	if (m_pScene) {
 
@@ -48,7 +48,7 @@ void GameObject::AddComponent(RenderComponent* pComponent) {
 	m_pRenderComponent->AddToGameObject(this);
 }
 
-void GameObject::AddToScene(Scene* pScene) {
+void meow::GameObject::AddToScene(Scene* pScene) {
 
 	m_pScene = pScene;
 
@@ -60,12 +60,12 @@ void GameObject::AddToScene(Scene* pScene) {
 	pScene->AddGameObject(this);
 }
 
-Scene* GameObject::GetScene() const {
+meow::Scene* meow::GameObject::GetScene() const {
 
 	return m_pScene;
 }
 
-void GameObject::Update() {
+void meow::GameObject::Update() {
 
 	for (Component* pComponent : m_pComponents) {
 

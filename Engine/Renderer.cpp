@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Renderer.h"
 
-void Renderer::Initialize(SDL_Window* pWindow) {
+void meow::Renderer::Initialize(SDL_Window* pWindow) {
 
 	// create openGL context
 	m_Context = SDL_GL_CreateContext(pWindow);
@@ -45,7 +45,7 @@ void Renderer::Initialize(SDL_Window* pWindow) {
 }
 
 
-void Renderer::Render() {
+void meow::Renderer::Render() {
 
 	glm::vec4 backgroundColor{ CAMERA.GetBackgroundColor() };
 	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
@@ -68,12 +68,12 @@ void Renderer::Render() {
 	glPopMatrix();
 }
 
-void Renderer::Cleanup()
+void meow::Renderer::Cleanup()
 {
 	SDL_GL_DeleteContext(m_Context);
 }
 
-void Renderer::SetRenderComponents(RenderComponent* pRenderComponents, int& nrOfActiveRenderComponents) {
+void meow::Renderer::SetRenderComponents(RenderComponent* pRenderComponents, int& nrOfActiveRenderComponents) {
 
 	m_pRenderComponents = pRenderComponents;
 	m_pNrOfActiveRenderComponents = &nrOfActiveRenderComponents;
@@ -84,16 +84,16 @@ the pivot element at its correct position in sorted
  array, and places all smaller (smaller than pivot)
 to left of pivot and all greater elements to right
 of pivot */
-int Renderer::PartitionComponents(int low, int high) {
+int meow::Renderer::PartitionComponents(int low, int high) {
 
 	float pivot = GetDepth(m_pRenderComponents[high]); // pivot 
 	int i = (low - 1);  // Index of smaller element 
 
 	for (int j = low; j <= high - 1; j++)
 	{
-		// If current element is smaller than or 
-		// equal to pivot 
-		if (GetDepth(m_pRenderComponents[j]) <= pivot)
+		// If current element is bigger than or 
+		// equal to pivot  -> sorting from 1.0f to 0.0f
+		if (GetDepth(m_pRenderComponents[j]) >= pivot)
 		{
 			i++;    // increment index of smaller element 
 			Swap(&m_pRenderComponents[i], &m_pRenderComponents[j]);
@@ -103,12 +103,12 @@ int Renderer::PartitionComponents(int low, int high) {
 	return (i + 1);
 }
 
-float Renderer::GetDepth(const RenderComponent& renderComponent) const {
+float meow::Renderer::GetDepth(const RenderComponent& renderComponent) const {
 
 	return renderComponent.GetGameObject()->GetComponent<TransformComponent>()->GetRenderDepth();
 }
 
-void Renderer::Swap(RenderComponent* a, RenderComponent* b)
+void meow::Renderer::Swap(RenderComponent* a, RenderComponent* b)
 {
 	RenderComponent t = *a;
 	*a = *b;
@@ -120,7 +120,7 @@ void Renderer::Swap(RenderComponent* a, RenderComponent* b)
  arr[] --> Array to be sorted,
   low  --> Starting index,
   high  --> Ending index */
-void Renderer::QuickSortComponents(int low, int high) {
+void meow::Renderer::QuickSortComponents(int low, int high) {
 
 	if (low < high)
 	{

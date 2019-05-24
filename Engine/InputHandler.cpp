@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "InputHandler.h"
 
-bool InputHandler::ProcessInput() {
+bool meow::InputHandler::ProcessInput() {
 
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	XInputGetState(0, &m_CurrentState);

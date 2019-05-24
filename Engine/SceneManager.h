@@ -2,24 +2,26 @@
 #include <unordered_map>
 #include "Renderer.h"
 
-class Scene;
+namespace meow {
 
-class SceneManager final
-{
-public:
-	explicit SceneManager(Renderer& renderer);
-	~SceneManager();
+	class Scene;
 
-	void Update();
+	class SceneManager final
+	{
+	public:
+		explicit SceneManager(Renderer& renderer);
+		~SceneManager();
 
-	void AddScene(Scene* pScene);
-	void SetSceneActive(const std::string& name);
+		void Update();
 
-	Scene* GetActiveScene() const;
+		void AddScene(Scene* pScene);
+		void SetSceneActive(const std::string& name);
 
-private:
-	Scene* m_pActiveScene;
-	Renderer& m_Renderer;
-	std::unordered_map<std::string, Scene*> m_pScenes;
-};
+		Scene* GetActiveScene() const;
 
+	private:
+		Scene* m_pActiveScene;
+		Renderer& m_Renderer;
+		std::unordered_map<std::string, Scene*> m_pScenes;
+	};
+}

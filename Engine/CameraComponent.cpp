@@ -2,6 +2,6 @@
 #include "CameraComponent.h"
 
 
-CameraComponent::CameraComponent(const glm::vec4& backgroundColor) 
+meow::CameraComponent::CameraComponent(const glm::vec4& backgroundColor) 
 	: m_BackgroundColor{ backgroundColor } {
 }

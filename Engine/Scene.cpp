@@ -3,7 +3,7 @@
 #include <algorithm>
 
 
-Scene::Scene(const std::string& name)
+meow::Scene::Scene(const std::string& name)
 	: m_Name{ name }
 	, m_pRenderComponents{ (RenderComponent*) malloc(sizeof(RenderComponent) * CONFIGDATA.memory.maxNumberOfRenderComponents) }
 	, m_pGameObjects{} {
@@ -12,7 +12,7 @@ Scene::Scene(const std::string& name)
 }
 
 
-Scene::~Scene() {
+meow::Scene::~Scene() {
 
 	free(m_pRenderComponents);
 	for (GameObject* pObject : m_pGameObjects) {
@@ -21,7 +21,7 @@ Scene::~Scene() {
 	}
 }
 
-void Scene::RootInitialize() {
+void meow::Scene::RootInitialize() {
 
 	GameObject* pCameraObject = new GameObject("MainCamera");
 	CameraComponent* pCamera = new CameraComponent({ 0.0f, 0.0f, 0.5f, 1.0f });
@@ -35,7 +35,7 @@ void Scene::RootInitialize() {
 	Initialize();
 }
 
-void Scene::RootUpdate() {
+void meow::Scene::RootUpdate() {
 
 	for (GameObject* pObject : m_pGameObjects) {
 
@@ -45,12 +45,12 @@ void Scene::RootUpdate() {
 	Update();
 }
 
-std::string Scene::GetName() const
+std::string meow::Scene::GetName() const
 {
 	return m_Name;
 }
 
-GameObject* Scene::FindGameObjectWithName(const std::string& name) {
+meow::GameObject* meow::Scene::FindGameObjectWithName(const std::string& name) {
 
 	auto it = std::find_if(m_pGameObjects.cbegin(), m_pGameObjects.cend(), 
 		[&name](const GameObject* pObject) {
@@ -66,25 +66,25 @@ GameObject* Scene::FindGameObjectWithName(const std::string& name) {
 	return nullptr;
 }
 
-RenderComponent* Scene::AddRenderComponent(RenderComponent* pRenderComponent) {
+meow::RenderComponent* meow::Scene::AddRenderComponent(RenderComponent* pRenderComponent) {
 
 	memcpy(&m_pRenderComponents[m_NrOfRenderComponents++], pRenderComponent, sizeof(RenderComponent));
 	return &m_pRenderComponents[m_NrOfRenderComponents - 1];
 }
 
-void Scene::RemoveRenderComponent(RenderComponent* pRenderComponent) {
+void meow::Scene::RemoveRenderComponent(RenderComponent* pRenderComponent) {
 
 	auto buffer = *pRenderComponent;
 	*pRenderComponent = m_pRenderComponents[m_NrOfRenderComponents - 1];
 	m_pRenderComponents[--m_NrOfRenderComponents] = buffer;
 }
 
-void Scene::AddGameObject(GameObject* pObject) {
+void meow::Scene::AddGameObject(GameObject* pObject) {
 
 	m_pGameObjects.push_back(pObject);
 }
 
-void Scene::RemoveGameObject(GameObject* pObject) {
+void meow::Scene::RemoveGameObject(GameObject* pObject) {
 
 	m_pGameObjects.erase(std::remove(m_pGameObjects.begin(), m_pGameObjects.end(), pObject), m_pGameObjects.end());
 }

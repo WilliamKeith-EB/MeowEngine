@@ -1,19 +1,21 @@
 #pragma once
 
-class InputHandler {
+namespace meow {
 
-public:
-	InputHandler() = default;
-	virtual ~InputHandler() = default;
+	class InputHandler {
 
-	InputHandler(const InputHandler& other) = delete;
-	InputHandler(InputHandler&& other) noexcept = delete;
-	InputHandler operator=(const InputHandler& other) = delete;
-	InputHandler operator=(InputHandler&& other) noexcept = delete;
+	public:
+		InputHandler() = default;
+		virtual ~InputHandler() = default;
 
-	virtual bool ProcessInput();
+		InputHandler(const InputHandler& other) = delete;
+		InputHandler(InputHandler&& other) noexcept = delete;
+		InputHandler operator=(const InputHandler& other) = delete;
+		InputHandler operator=(InputHandler&& other) noexcept = delete;
 
-protected:
-	XINPUT_STATE m_CurrentState{};
-};
+		virtual bool ProcessInput();
 
+	protected:
+		XINPUT_STATE m_CurrentState{};
+	};
+}

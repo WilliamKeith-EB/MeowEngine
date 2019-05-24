@@ -1,18 +1,22 @@
 #pragma once
-class GameObject;
 
-class Component
-{
-public:
-	Component() = default;
-	virtual ~Component() = default;
+namespace meow {
 
-	virtual void Update() = 0;
+	class GameObject;
 
-	void AddToGameObject(GameObject* pGameObject);
-	GameObject* GetGameObject() const { return m_pGameObject; }
+	class Component
+	{
+	public:
+		Component() = default;
+		virtual ~Component() = default;
 
-protected:
-	GameObject* m_pGameObject;
-};
+		virtual void Update() = 0;
 
+		void AddToGameObject(GameObject* pGameObject);
+		GameObject* GetGameObject() const { return m_pGameObject; }
+
+	protected:
+		GameObject* m_pGameObject;
+	};
+
+}

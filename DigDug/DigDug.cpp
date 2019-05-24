@@ -11,7 +11,7 @@
 int main(int argc, char* argv[]) {
 #pragma warning( pop )
 
-	Engine engine{};
+	meow::Engine engine{};
 	DigDugGame* pGame = new DigDugGame{};
 
 	engine.Run(pGame);

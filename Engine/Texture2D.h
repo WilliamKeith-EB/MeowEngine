@@ -9,18 +9,20 @@
 
 struct SDL_Texture;
 
-class Texture2D
-{
-public:
-	explicit Texture2D(const std::string& path);
-	virtual ~Texture2D();
+namespace meow {
 
-	virtual void Render(const glm::mat4x4& transformationMatrix);
-	const glm::vec2& GetDimensions() const { return m_Dimensions; }
+	class Texture2D
+	{
+	public:
+		explicit Texture2D(const std::string& path);
+		virtual ~Texture2D();
 
-protected:
-	SDL_Texture* m_pTexture;
-	glm::vec2 m_Dimensions;
-	GLuint m_Id;
-};
+		virtual void Render(const glm::mat4x4& transformationMatrix);
+		const glm::vec2& GetDimensions() const { return m_Dimensions; }
 
+	protected:
+		SDL_Texture* m_pTexture;
+		glm::vec2 m_Dimensions;
+		GLuint m_Id;
+	};
+}

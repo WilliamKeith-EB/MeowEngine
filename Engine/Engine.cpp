@@ -4,7 +4,7 @@
 #include "Game.h"
 #include <chrono>
 
-void Engine::Initialize()
+void meow::Engine::Initialize()
 {
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -44,7 +44,7 @@ void Engine::Initialize()
 	m_Renderer.Initialize(m_pWindow);
 }
 
-void Engine::Cleanup() {
+void meow::Engine::Cleanup() {
 
 	auto& configdata = CONFIGDATA;
 	delete &configdata;
@@ -57,10 +57,14 @@ void Engine::Cleanup() {
 	SDL_Quit();
 }
 
-void Engine::Run(Game* pGame) {
+void meow::Engine::Run(Game* pGame) {
 
 	Logger logger = Logger();
+	ResourceManager resourceManager{ "../Data/" };
+
 	Locator::Provide(&logger);
+	Locator::Provide(&resourceManager);
+
 	Initialize();
 
 	// local scope to auto "delete" local variables to this scope

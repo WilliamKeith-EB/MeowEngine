@@ -13,24 +13,31 @@ MainScene::~MainScene()
 
 void MainScene::Initialize() {
 
+	using namespace meow;
+
+
 	auto background = new GameObject();
 	background->AddToScene(this);
-	Texture2D tex{ "../Data/image.jpg" };
-	background->AddComponent(new RenderComponent(tex));
-	background->GetComponent<TransformComponent>()->SetRenderDepth(0.8f);
+	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("image.jpg")));
+	background->GetComponent<TransformComponent>()->SetRenderDepth(0.6f);
 
 	m_pCam01 = &CAMERA;
 	auto cam02 = new GameObject("Cam02");
 	m_pCam02 = (CameraComponent*) cam02->AddComponent(new CameraComponent({ 0,0.5f,0,1 }));
 	cam02->AddToScene(this);
 
-	//background = new GameObject("Background");
-	//background->AddToScene(this);
-	//Texture2D backgroundTexture{ "../Data/background.jpg" };
-	//background->AddComponent(new RenderComponent(backgroundTexture));
-	//auto transform = background->GetComponent<TransformComponent>();
-	//transform->SetAnchor({ 0, 0 });
-	//transform->SetRenderDepth(0.2f);
+	background = new GameObject("Background");
+	background->AddToScene(this);
+	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("background.jpg")));
+	auto transform = background->GetComponent<TransformComponent>();
+	transform->SetAnchor({ 0, 0 });
+	transform->SetRenderDepth(1.0f);
+
+	GameObject* logo = new GameObject("Logo");
+	logo->AddToScene(this);
+	logo->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("logo.png")));
+	logo->GetComponent<TransformComponent>()->SetPosition({ CONFIGDATA.window.width / 2, CONFIGDATA.window.height / 2 });
+	logo->GetComponent<TransformComponent>()->SetRenderDepth(0.5f);
 
 	//background = new GameObject("Background");
 	//background->AddToScene(this);
@@ -85,6 +92,6 @@ void MainScene::Update() {
 
 		m_TimePassed -= 1.0f;
 		LOGGER.LogInfo(std::to_string(TIME.GetFPS()));
-		Locator::Provide(m_pCam02);
+		//Locator::Provide(m_pCam02);
 	}
 }

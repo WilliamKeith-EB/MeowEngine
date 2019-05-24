@@ -2,7 +2,7 @@
 #include "ConfigLoader.h"
 #include <sstream>
 
-ConfigLoader::ConfigLoader(const std::string& folder)
+meow::ConfigLoader::ConfigLoader(const std::string& folder)
 	: m_pData{ new ConfigData{} }
 	, m_Buffer{}
 {
@@ -36,12 +36,12 @@ ConfigLoader::ConfigLoader(const std::string& folder)
 	m_pData->memory.gameObjectArrayStartSize = std::stoi(m_Buffer.data());
 }
 
-ConfigData ConfigLoader::GetConfigData() {
+meow::ConfigData meow::ConfigLoader::GetConfigData() {
 
 	return *m_pData;
 }
 
-void ConfigLoader::LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath) {
+void meow::ConfigLoader::LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath) {
 	
 	auto size = GetPrivateProfileString(title.c_str(), data.c_str(), "", m_Buffer.data(), DWORD(m_Buffer.size()), filePath.c_str());
 
@@ -54,7 +54,7 @@ void ConfigLoader::LoadConfigData(const std::string& title, const std::string& d
 }
 
 
-ConfigLoader::~ConfigLoader()
+meow::ConfigLoader::~ConfigLoader()
 {
 	delete m_pData;
 }

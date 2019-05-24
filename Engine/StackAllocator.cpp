@@ -2,20 +2,20 @@
 #include "StackAllocator.h"
 
 
-StackAllocator::StackAllocator(size_t size)
+meow::StackAllocator::StackAllocator(size_t size)
 {
 	m_StackPointer = new char[size]();
 	m_OriginalMemory = m_StackPointer;
 	m_Size = size;
 }
 
-StackAllocator::~StackAllocator()
+meow::StackAllocator::~StackAllocator()
 {
 	Reset();
 	delete[] m_StackPointer;
 }
 
-void* StackAllocator::Acquire(size_t nrOfBytes)
+void* meow::StackAllocator::Acquire(size_t nrOfBytes)
 {
 	if (GetFreeSpaceAmount() < nrOfBytes) {
 
@@ -29,18 +29,18 @@ void* StackAllocator::Acquire(size_t nrOfBytes)
 	return ptr;
 }
 
-void StackAllocator::Reset()
+void meow::StackAllocator::Reset()
 {
 	m_StackPointer = m_OriginalMemory;
 }
 
-size_t StackAllocator::GetFreeSpaceAmount() const
+size_t meow::StackAllocator::GetFreeSpaceAmount() const
 {
 	size_t memory = m_Size - (m_StackPointer - m_OriginalMemory);
 	return memory;
 }
 
-bool StackAllocator::IsInStack(void* ptr) const {
+bool meow::StackAllocator::IsInStack(void* ptr) const {
 
 	return (ptr < m_StackPointer && ptr > m_OriginalMemory);
 }

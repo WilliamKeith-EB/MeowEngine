@@ -1,25 +1,29 @@
 #pragma once
 #include <chrono>
 
-class Time final {
+namespace meow {
 
-	friend class Engine;
+	class Time final {
 
-public:
-	Time(const Time& other) = delete;
-	Time(Time&& other) noexcept = delete;
-	Time& operator=(const Time& other) = delete;
-	Time& operator=(Time&& other) noexcept = delete;
+		friend class Engine;
 
-	float GetDeltaT() const;
-	float GetFPS() const;
+	public:
+		Time(const Time& other) = delete;
+		Time(Time&& other) noexcept = delete;
+		Time& operator=(const Time& other) = delete;
+		Time& operator=(Time&& other) noexcept = delete;
 
-private:
-	// time scale
-	// frame count (nr of render passes)
-	float m_DeltaT;
-	float m_FPS;
+		float GetDeltaT() const;
+		float GetFPS() const;
 
-	Time() = default;
-	~Time() = default;
-};
+	private:
+		// time scale
+		// frame count (nr of render passes)
+		float m_DeltaT;
+		float m_FPS;
+
+		Time() = default;
+		~Time() = default;
+	};
+
+}

@@ -1,98 +1,99 @@
 #include "pch.h"
 #include "Locator.h"
 
-InputHandler* Locator::m_pInputHandler{};
-Time* Locator::m_pTime{};
-Logger* Locator::m_pLogger{};
-SceneManager* Locator::m_pSceneManager{};
-StackAllocator* Locator::m_pFrameAllocator{};
-ResourceManager* Locator::m_pResourceManager{};
-ConfigData* Locator::m_pConfigData{};
-CameraComponent* Locator::m_pCameraComponent{};
+meow::InputHandler* meow::Locator::m_pInputHandler{};
+meow::Time* meow::Locator::m_pTime{};
+meow::Logger* meow::Locator::m_pLogger{};
+meow::SceneManager* meow::Locator::m_pSceneManager{};
+meow::StackAllocator* meow::Locator::m_pFrameAllocator{};
+meow::ResourceManager* meow::Locator::m_pResourceManager{};
+meow::ConfigData* meow::Locator::m_pConfigData{};
+meow::CameraComponent* meow::Locator::m_pCameraComponent{};
 
-Time& Locator::GetTime() {
+meow::Time& meow::Locator::GetTime() {
 
+	assert(m_pTime);
 	return *m_pTime;
 }
 
-InputHandler& Locator::GetInputHandler() {
+meow::InputHandler& meow::Locator::GetInputHandler() {
 
 	assert(m_pInputHandler);
 	return *m_pInputHandler;
 }
 
-Logger& Locator::GetLogger() {
+meow::Logger& meow::Locator::GetLogger() {
 
 	assert(m_pLogger);
 	return *m_pLogger;
 }
 
-SceneManager& Locator::GetSceneManager() {
+meow::SceneManager& meow::Locator::GetSceneManager() {
 
 	assert(m_pSceneManager);
 	return *m_pSceneManager;
 }
 
-StackAllocator& Locator::GetFrameAllocator()
+meow::StackAllocator& meow::Locator::GetFrameAllocator()
 {
 	assert(m_pFrameAllocator);
 	return *m_pFrameAllocator;
 }
 
-ResourceManager& Locator::GetResourceManager() {
+meow::ResourceManager& meow::Locator::GetResourceManager() {
 
 	assert(m_pResourceManager);
 	return *m_pResourceManager;
 }
 
-ConfigData& Locator::GetConfigData() {
+meow::ConfigData& meow::Locator::GetConfigData() {
 
 	assert(m_pConfigData);
 	return *m_pConfigData;
 }
 
-CameraComponent & Locator::GetCamera() {
+meow::CameraComponent& meow::Locator::GetCamera() {
 
 	assert(m_pCameraComponent);
 	return *m_pCameraComponent;
 }
 
-void Locator::Provide(Time* pTime) {
+void  meow::Locator::Provide(Time* pTime) {
 
 	m_pTime = pTime;
 }
 
-void Locator::Provide(InputHandler* pInputHandler) {
+void meow::Locator::Provide(InputHandler* pInputHandler) {
 
 	m_pInputHandler = pInputHandler;
 }
 
-void Locator::Provide(Logger* pLogger) {
+void  meow::Locator::Provide(Logger* pLogger) {
 
 	m_pLogger = pLogger;
 }
 
-void Locator::Provide(SceneManager* pSceneManager) {
+void  meow::Locator::Provide(SceneManager* pSceneManager) {
 
 	m_pSceneManager = pSceneManager;
 }
 
-void Locator::Provide(StackAllocator* pFrameAllocator) {
+void  meow::Locator::Provide(StackAllocator* pFrameAllocator) {
 
 	m_pFrameAllocator = pFrameAllocator;
 }
 
-void Locator::Provide(ResourceManager* pResourceManager) {
+void meow::Locator::Provide(ResourceManager* pResourceManager) {
 
 	m_pResourceManager = pResourceManager;
 }
 
-void Locator::Provide(ConfigData* pConfigData) {
+void  meow::Locator::Provide(ConfigData* pConfigData) {
 
 	m_pConfigData = pConfigData;
 }
 
-void Locator::Provide(CameraComponent* pCameraComponent) {
+void meow::Locator::Provide(CameraComponent* pCameraComponent) {
 
 	m_pCameraComponent = pCameraComponent;
 }

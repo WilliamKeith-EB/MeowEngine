@@ -2,29 +2,29 @@
 #include "RenderComponent.h"
 
 
-RenderComponent::RenderComponent(const Texture2D& texture) 
-	: m_Texture{ texture } {
+meow::RenderComponent::RenderComponent(Texture2D* pTexture) 
+	: m_pTexture{ pTexture } {
 
 }
 
-void RenderComponent::AddToGameObject(GameObject* pGameObject) {
+void meow::RenderComponent::AddToGameObject(GameObject* pGameObject) {
 
 	m_pGameObject = pGameObject;
-	m_pGameObject->GetComponent<TransformComponent>()->SetSize(m_Texture.GetDimensions());
+	m_pGameObject->GetComponent<TransformComponent>()->SetSize(m_pTexture->GetDimensions());
 }
 
-void* RenderComponent::operator new(size_t size) {
+void* meow::RenderComponent::operator new(size_t size) {
 
 	return FRAMEALLOC.Acquire(size);
 }
 
-void RenderComponent::operator delete(void* ptr) {
+void meow::RenderComponent::operator delete(void* ptr) {
 
 	if (!FRAMEALLOC.IsInStack(ptr))
 		((RenderComponent*)ptr)->m_pGameObject->GetScene()->RemoveRenderComponent((RenderComponent*)ptr);
 }
 
-void RenderComponent::Render()
+void meow::RenderComponent::Render()
 {
-	m_Texture.Render(m_pGameObject->GetComponent<TransformComponent>()->GetTransformMatrix());
+	m_pTexture->Render(m_pGameObject->GetComponent<TransformComponent>()->GetTransformMatrix());
 }
