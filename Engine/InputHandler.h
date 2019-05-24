@@ -1,12 +1,19 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+#pragma warning(pop)
+
 namespace meow {
+
+	class InputListener;
 
 	class InputHandler {
 
 	public:
-		InputHandler() = default;
-		virtual ~InputHandler() = default;
+		InputHandler();
+		virtual ~InputHandler();
 
 		InputHandler(const InputHandler& other) = delete;
 		InputHandler(InputHandler&& other) noexcept = delete;
@@ -15,7 +22,13 @@ namespace meow {
 
 		virtual bool ProcessInput();
 
+		int GetNumberOfConnectedControllers() const { return m_NrOfConnectedControllers; }
+		const glm::vec2& GetMousePosition() const { return m_MousePosition; }
+
 	protected:
-		XINPUT_STATE m_CurrentState{};
+		const int m_MaxNrOfControllers;
+		XINPUT_STATE* m_pCurrentStates;
+		int m_NrOfConnectedControllers;
+		glm::vec2 m_MousePosition;
 	};
 }

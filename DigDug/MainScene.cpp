@@ -92,6 +92,6 @@ void MainScene::Update() {
 
 		m_TimePassed -= 1.0f;
 		LOGGER.LogInfo(std::to_string(TIME.GetFPS()));
-		//Locator::Provide(m_pCam02);
+		//LOGGER.LogInfo(std::to_string(INPUT.GetNumberOfConnectedControllers()) + " Controllers connected");
 	}
 }
