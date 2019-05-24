@@ -42,7 +42,7 @@ bool meow::InputHandler::ProcessInput() {
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
 		case SDL_MOUSEWHEEL:
-
+			;
 		}
 	}
 

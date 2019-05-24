@@ -18,8 +18,12 @@ void MainScene::Initialize() {
 
 	auto background = new GameObject();
 	background->AddToScene(this);
-	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("image.jpg")));
+	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("aperture.png")));
 	background->GetComponent<TransformComponent>()->SetRenderDepth(0.6f);
+	background->GetComponent<TransformComponent>()->SetPosition({ CONFIGDATA.window.width / 2, CONFIGDATA.window.height / 2 });
+	background->GetComponent<TransformComponent>()->SetScale({ 0.7f, 0.7f });
+
+	m_pObject = background;
 
 	m_pCam01 = &CAMERA;
 	auto cam02 = new GameObject("Cam02");
@@ -85,6 +89,10 @@ void MainScene::Initialize() {
 }
 
 void MainScene::Update() {
+	using namespace meow;
+
+	CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Rotate(360.0f * TIME.GetDeltaT());
+	CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Scale(glm::vec2(1.0f, 1.0f) + 0.5f * TIME.GetDeltaT());
 
 	m_TimePassed += TIME.GetDeltaT();
 

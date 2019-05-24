@@ -92,9 +92,6 @@
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="InputListener.cpp">
-      <Filter>Header Files\Input</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -156,9 +153,6 @@
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="InputListener.h">
-      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

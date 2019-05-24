@@ -202,7 +202,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InputListener.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="pch.h" />
@@ -223,7 +222,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Main.cpp" />

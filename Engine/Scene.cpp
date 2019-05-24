@@ -24,11 +24,12 @@ meow::Scene::~Scene() {
 void meow::Scene::RootInitialize() {
 
 	GameObject* pCameraObject = new GameObject("MainCamera");
-	CameraComponent* pCamera = new CameraComponent({ 0.0f, 0.0f, 0.5f, 1.0f });
+	CameraComponent* pCamera = new CameraComponent({ 0.9f, 0.9f, 0.9f, 1.0f });
 	pCameraObject->AddComponent(pCamera);
 	TransformComponent* pTransform = pCameraObject->GetComponent<TransformComponent>();
 	pTransform->SetSize({CONFIGDATA.window.width, CONFIGDATA.window.height});
-	pTransform->SetAnchor({0,0  });
+	pTransform->SetAnchor({ 0.5f,0.5f });
+	pTransform->SetPosition({ CONFIGDATA.window.width /2, CONFIGDATA.window.height / 2 });
 	pCameraObject->AddToScene(this);
 	Locator::Provide(pCamera);
 

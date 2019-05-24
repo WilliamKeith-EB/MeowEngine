@@ -39,7 +39,6 @@
 #include "ConfigLoader.h"
 #include "Texture2D.h"
 #include "ResourceManager.h"
-#include "InputListener.h"
 
 #pragma warning(push)
 #pragma warning (disable:4201)
