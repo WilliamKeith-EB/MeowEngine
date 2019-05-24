@@ -1,31 +1,136 @@
 #include "pch.h"
 #include "Renderer.h"
-#include <SDL.h>
 
-void Renderer::Initialize(SDL_Window * pWindow) {
+void Renderer::Initialize(SDL_Window* pWindow) {
 
-	m_pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/);
-
-	if (m_pRenderer == nullptr)
+	// create openGL context
+	m_Context = SDL_GL_CreateContext(pWindow);
+	if (m_Context == nullptr)
 	{
-		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
+		LOGGER.LogError(SDL_GetError());
+		return;
 	}
+
+	if (CONFIGDATA.window.useVSync)
+	{
+		if (SDL_GL_SetSwapInterval(1) < 0)
+		{
+			LOGGER.LogError(SDL_GetError());
+			return;
+		}
+	}
+	else
+	{
+		SDL_GL_SetSwapInterval(0);
+	}
+
+	// Set the Projection matrix to the identity matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	// Set up a two-dimensional orthographic viewing region.
+	gluOrtho2D(0, CONFIGDATA.window.width, 0, CONFIGDATA.window.height); // y from bottom to top
+
+	// Set the viewport to the client window area
+	// The viewport is the rectangular region of the window where the image is drawn.
+	glViewport(0, 0, int(CONFIGDATA.window.width), int(CONFIGDATA.window.height));
+
+	// Set the Model view matrix to the identity matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	// Enable color blending and use alpha blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::Destroy() {
-
-	if (m_pRenderer != nullptr) {
-
-		SDL_DestroyRenderer(m_pRenderer);
-		m_pRenderer = nullptr;
-	}
-}
 
 void Renderer::Render() {
 
-	SDL_RenderClear(m_pRenderer);
+	glm::vec4 backgroundColor{ CAMERA.GetBackgroundColor() };
+	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+	glClear(GL_COLOR_BUFFER_BIT);
 
-	// render shit
+	// sort render components according to render depth
+	QuickSortComponents(0, *m_pNrOfActiveRenderComponents - 1);
 
-	SDL_RenderPresent(m_pRenderer);
+	glm::mat4x4 cameraTransform = CAMERA.GetGameObject()->GetComponent<TransformComponent>()->GetTransformMatrix();
+	cameraTransform = glm::inverse(cameraTransform);
+
+	glPushMatrix();
+	glMultMatrixf(&cameraTransform[0].x);
+
+	for (int i{}; i < *m_pNrOfActiveRenderComponents; ++i) {
+
+		m_pRenderComponents[i].Render();
+	}
+
+	glPopMatrix();
+}
+
+void Renderer::Cleanup()
+{
+	SDL_GL_DeleteContext(m_Context);
+}
+
+void Renderer::SetRenderComponents(RenderComponent* pRenderComponents, int& nrOfActiveRenderComponents) {
+
+	m_pRenderComponents = pRenderComponents;
+	m_pNrOfActiveRenderComponents = &nrOfActiveRenderComponents;
+}
+
+/* This function takes last element as pivot, places
+the pivot element at its correct position in sorted
+ array, and places all smaller (smaller than pivot)
+to left of pivot and all greater elements to right
+of pivot */
+int Renderer::PartitionComponents(int low, int high) {
+
+	float pivot = GetDepth(m_pRenderComponents[high]); // pivot 
+	int i = (low - 1);  // Index of smaller element 
+
+	for (int j = low; j <= high - 1; j++)
+	{
+		// If current element is smaller than or 
+		// equal to pivot 
+		if (GetDepth(m_pRenderComponents[j]) <= pivot)
+		{
+			i++;    // increment index of smaller element 
+			Swap(&m_pRenderComponents[i], &m_pRenderComponents[j]);
+		}
+	}
+	Swap(&m_pRenderComponents[i + 1], &m_pRenderComponents[high]);
+	return (i + 1);
+}
+
+float Renderer::GetDepth(const RenderComponent& renderComponent) const {
+
+	return renderComponent.GetGameObject()->GetComponent<TransformComponent>()->GetRenderDepth();
+}
+
+void Renderer::Swap(RenderComponent* a, RenderComponent* b)
+{
+	RenderComponent t = *a;
+	*a = *b;
+	*b = t;
+}
+
+
+/* The main function that implements QuickSort
+ arr[] --> Array to be sorted,
+  low  --> Starting index,
+  high  --> Ending index */
+void Renderer::QuickSortComponents(int low, int high) {
+
+	if (low < high)
+	{
+		/* pi is partitioning index, arr[p] is now
+		   at right place */
+		int pi = PartitionComponents(low, high);
+
+		// Separately sort elements before 
+		// partition and after partition 
+		QuickSortComponents(low, pi - 1);
+		QuickSortComponents(pi + 1, high);
+	}
 }

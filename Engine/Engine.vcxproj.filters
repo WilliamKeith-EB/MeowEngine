@@ -31,7 +31,7 @@
       <UniqueIdentifier>{cd213672-b298-4c2e-b1d8-955261dd17b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Memory">
-      <UniqueIdentifier>{1e03afa4-364f-42ab-baf5-353ada16aeb4}</UniqueIdentifier>
+      <UniqueIdentifier>{325002bd-10db-4c54-913a-3ca027f15340}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +56,6 @@
     <ClCompile Include="ConfigLoader.cpp">
       <Filter>Header Files\Content</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Header Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Header Files\Scenes</Filter>
     </ClCompile>
@@ -74,12 +71,6 @@
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="DoubleLinkAllocator.cpp">
-      <Filter>Header Files\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="StackAllocator.cpp">
-      <Filter>Header Files\Memory</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Header Files\Content</Filter>
     </ClCompile>
@@ -87,6 +78,18 @@
       <Filter>Header Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StackAllocator.cpp">
+      <Filter>Header Files\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -109,9 +112,6 @@
     <ClInclude Include="ConfigLoader.h">
       <Filter>Header Files\Content</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
@@ -130,12 +130,6 @@
     <ClInclude Include="Components.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="DoubleLinkAllocator.h">
-      <Filter>Header Files\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="StackAllocator.h">
-      <Filter>Header Files\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header Files\Content</Filter>
     </ClInclude>
@@ -146,6 +140,18 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StackAllocator.h">
+      <Filter>Header Files\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

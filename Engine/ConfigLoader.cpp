@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "ConfigLoader.h"
-
+#include <sstream>
 
 ConfigLoader::ConfigLoader(const std::string& folder)
 	: m_pData{ new ConfigData{} }
@@ -21,8 +21,19 @@ ConfigLoader::ConfigLoader(const std::string& folder)
 	LoadConfigData("Window", "Title", "Programming 4 assignment", engineFile);
 	m_pData->window.title = m_Buffer.data();
 
+	LoadConfigData("Window", "UseVSync", "true", engineFile);
+	bool b{};
+	std::istringstream(m_Buffer.data()) >> std::boolalpha >> b;
+	m_pData->window.useVSync = b;
+
 	LoadConfigData("Memory", "FrameAllocSize", "1024", engineFile);
 	m_pData->memory.frameAllocSize = std::stoi(m_Buffer.data());
+
+	LoadConfigData("Memory", "MaxNumberOfRenderComponents", "50", engineFile);
+	m_pData->memory.maxNumberOfRenderComponents = std::stoi(m_Buffer.data());
+
+	LoadConfigData("Memory", "GameObjectArrayStartSize", "60", engineFile);
+	m_pData->memory.gameObjectArrayStartSize = std::stoi(m_Buffer.data());
 }
 
 ConfigData ConfigLoader::GetConfigData() {

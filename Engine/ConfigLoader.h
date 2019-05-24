@@ -7,11 +7,14 @@ struct ConfigData {
 
 		float width, height;
 		std::string title;
+		bool useVSync;
 	} window;
 
 	struct {
 
 		size_t frameAllocSize;
+		int maxNumberOfRenderComponents;
+		int gameObjectArrayStartSize;
 	} memory;
 	// run with or without console
 };

@@ -1,29 +1,30 @@
 #pragma once
-#include "DoubleLinkAllocator.h"
 
 class RenderComponent;
 class GameObject;
 
 class Scene
 {
-	friend class Component;
 	friend class RenderComponent;
 	friend class GameObject;
+	friend class SceneManager;
 
 public:
 	explicit Scene(const std::string& name);
 	virtual ~Scene();
 
+	void RootInitialize();
 	virtual void Initialize() = 0;
-	virtual void Update();
+	void RootUpdate();
+	virtual void Update() = 0;
 
 	std::string GetName() const;
+	GameObject* FindGameObjectWithName(const std::string& name);
 
 private:
 	std::string m_Name;
 
-	GameObject* m_pGameObjects;
-	int m_NrOfGameObjects;
+	std::vector<GameObject*> m_pGameObjects;
 
 	RenderComponent* m_pRenderComponents;
 	int m_NrOfRenderComponents;
@@ -31,9 +32,7 @@ private:
 	RenderComponent* AddRenderComponent(RenderComponent* pRenderComponent);
 	void RemoveRenderComponent(RenderComponent* pRenderComponent);
 
-	void AddGameObject(GameObject* pGameObject);
-	void RemoveGameObject(GameObject* pGameObject);
-
-	DoubleLinkAllocator m_ComponentPool;
+	void AddGameObject(GameObject* pObject);
+	void RemoveGameObject(GameObject* pObject);
 };
 

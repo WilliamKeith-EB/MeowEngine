@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "InputHandler.h"
 
-#include <SDL.h>
-
 bool InputHandler::ProcessInput() {
 
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));

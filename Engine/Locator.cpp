@@ -7,6 +7,8 @@ Logger* Locator::m_pLogger{};
 SceneManager* Locator::m_pSceneManager{};
 StackAllocator* Locator::m_pFrameAllocator{};
 ResourceManager* Locator::m_pResourceManager{};
+ConfigData* Locator::m_pConfigData{};
+CameraComponent* Locator::m_pCameraComponent{};
 
 Time& Locator::GetTime() {
 
@@ -43,6 +45,18 @@ ResourceManager& Locator::GetResourceManager() {
 	return *m_pResourceManager;
 }
 
+ConfigData& Locator::GetConfigData() {
+
+	assert(m_pConfigData);
+	return *m_pConfigData;
+}
+
+CameraComponent & Locator::GetCamera() {
+
+	assert(m_pCameraComponent);
+	return *m_pCameraComponent;
+}
+
 void Locator::Provide(Time* pTime) {
 
 	m_pTime = pTime;
@@ -71,4 +85,14 @@ void Locator::Provide(StackAllocator* pFrameAllocator) {
 void Locator::Provide(ResourceManager* pResourceManager) {
 
 	m_pResourceManager = pResourceManager;
+}
+
+void Locator::Provide(ConfigData* pConfigData) {
+
+	m_pConfigData = pConfigData;
+}
+
+void Locator::Provide(CameraComponent* pCameraComponent) {
+
+	m_pCameraComponent = pCameraComponent;
 }

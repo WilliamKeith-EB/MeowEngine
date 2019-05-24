@@ -1,12 +1,13 @@
 #pragma once
 #include <unordered_map>
+#include "Renderer.h"
 
 class Scene;
 
 class SceneManager final
 {
 public:
-	SceneManager();
+	explicit SceneManager(Renderer& renderer);
 	~SceneManager();
 
 	void Update();
@@ -18,6 +19,7 @@ public:
 
 private:
 	Scene* m_pActiveScene;
+	Renderer& m_Renderer;
 	std::unordered_map<std::string, Scene*> m_pScenes;
 };
 

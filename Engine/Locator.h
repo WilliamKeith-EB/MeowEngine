@@ -6,6 +6,8 @@
 #define SCENEMANAGER Locator::GetSceneManager()
 #define FRAMEALLOC Locator::GetFrameAllocator()
 #define RESOURCEMANAGER Locator::GetResourceManager()
+#define CONFIGDATA Locator::GetConfigData()
+#define CAMERA Locator::GetCamera()
 
 class Time;
 class InputHandler;
@@ -13,6 +15,8 @@ class Logger;
 class SceneManager;
 class StackAllocator;
 class ResourceManager;
+class CameraComponent;
+struct ConfigData;
 
 class Locator final {
 
@@ -24,6 +28,8 @@ public:
 	static SceneManager& GetSceneManager();
 	static StackAllocator& GetFrameAllocator();
 	static ResourceManager& GetResourceManager();
+	static ConfigData& GetConfigData();
+	static CameraComponent& GetCamera();
 
 	static void Provide(Time* pTime);
 	static void Provide(InputHandler* pInputHandler);
@@ -31,6 +37,8 @@ public:
 	static void Provide(SceneManager* pSceneManager);
 	static void Provide(StackAllocator* pFrameAllocator);
 	static void Provide(ResourceManager* pResourceManager);
+	static void Provide(ConfigData* pConfigData);
+	static void Provide(CameraComponent* pCameraComponent);
 private:
 	Locator() = default;
 	~Locator() = default;
@@ -41,5 +49,7 @@ private:
 	static SceneManager* m_pSceneManager;
 	static StackAllocator* m_pFrameAllocator;
 	static ResourceManager* m_pResourceManager;
+	static ConfigData* m_pConfigData;
+	static CameraComponent* m_pCameraComponent;
 };
 

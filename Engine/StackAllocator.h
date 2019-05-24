@@ -1,4 +1,5 @@
 #pragma once
+
 class StackAllocator
 {
 public:
@@ -10,7 +11,7 @@ public:
 	explicit StackAllocator(size_t sizeInBytes);
 	~StackAllocator();
 
-	void * Acquire(size_t nbBytes);
+	void* Acquire(size_t nbBytes);
 	void Reset();
 
 	size_t GetFreeSpaceAmount() const;

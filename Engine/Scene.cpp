@@ -1,24 +1,48 @@
 #include "pch.h"
 #include "Scene.h"
+#include <algorithm>
 
 
 Scene::Scene(const std::string& name)
-	: m_ComponentPool{1024}
-	, m_Name{ name }
-	, m_pRenderComponents{ (RenderComponent*) malloc(sizeof(RenderComponent) * 50) }
-	, m_pGameObjects{ (GameObject*) malloc(sizeof(GameObject) * 60) }
-{
+	: m_Name{ name }
+	, m_pRenderComponents{ (RenderComponent*) malloc(sizeof(RenderComponent) * CONFIGDATA.memory.maxNumberOfRenderComponents) }
+	, m_pGameObjects{} {
+
+	m_pGameObjects.reserve(CONFIGDATA.memory.gameObjectArrayStartSize);
 }
 
 
-Scene::~Scene()
-{
+Scene::~Scene() {
+
 	free(m_pRenderComponents);
-	free(m_pGameObjects);
+	for (GameObject* pObject : m_pGameObjects) {
+
+		delete pObject;
+	}
 }
 
-void Scene::Update()
-{
+void Scene::RootInitialize() {
+
+	GameObject* pCameraObject = new GameObject("MainCamera");
+	CameraComponent* pCamera = new CameraComponent({ 0.0f, 0.0f, 0.5f, 1.0f });
+	pCameraObject->AddComponent(pCamera);
+	TransformComponent* pTransform = pCameraObject->GetComponent<TransformComponent>();
+	pTransform->SetSize({CONFIGDATA.window.width, CONFIGDATA.window.height});
+	pTransform->SetAnchor({0,0  });
+	pCameraObject->AddToScene(this);
+	Locator::Provide(pCamera);
+
+	Initialize();
+}
+
+void Scene::RootUpdate() {
+
+	for (GameObject* pObject : m_pGameObjects) {
+
+		pObject->Update();
+	}
+
+	Update();
 }
 
 std::string Scene::GetName() const
@@ -26,9 +50,25 @@ std::string Scene::GetName() const
 	return m_Name;
 }
 
+GameObject* Scene::FindGameObjectWithName(const std::string& name) {
+
+	auto it = std::find_if(m_pGameObjects.cbegin(), m_pGameObjects.cend(), 
+		[&name](const GameObject* pObject) {
+
+		if (pObject->GetName() == name)
+			return true;
+		
+		return false;
+	});
+
+	if (it != m_pGameObjects.cend())
+		return *it;
+	return nullptr;
+}
+
 RenderComponent* Scene::AddRenderComponent(RenderComponent* pRenderComponent) {
 
-	memcpy(&m_pGameObjects[m_NrOfGameObjects++], pRenderComponent, sizeof(RenderComponent));
+	memcpy(&m_pRenderComponents[m_NrOfRenderComponents++], pRenderComponent, sizeof(RenderComponent));
 	return &m_pRenderComponents[m_NrOfRenderComponents - 1];
 }
 
@@ -39,14 +79,12 @@ void Scene::RemoveRenderComponent(RenderComponent* pRenderComponent) {
 	m_pRenderComponents[--m_NrOfRenderComponents] = buffer;
 }
 
-void Scene::AddGameObject(GameObject* pGameObject) {
+void Scene::AddGameObject(GameObject* pObject) {
 
-	memcpy(&m_pGameObjects[m_NrOfGameObjects++], pGameObject, sizeof(GameObject));
+	m_pGameObjects.push_back(pObject);
 }
 
-void Scene::RemoveGameObject(GameObject* pGameObject) {
+void Scene::RemoveGameObject(GameObject* pObject) {
 
-	auto buffer = *pGameObject;
-	*pGameObject = m_pGameObjects[m_NrOfGameObjects - 1];
-	m_pGameObjects[--m_NrOfGameObjects] = buffer;
+	m_pGameObjects.erase(std::remove(m_pGameObjects.begin(), m_pGameObjects.end(), pObject), m_pGameObjects.end());
 }

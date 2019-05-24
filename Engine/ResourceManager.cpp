@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "ResourceManager.h"
 
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-
 
 ResourceManager::ResourceManager(const std::string& folder)
 	: m_Folder{ folder }

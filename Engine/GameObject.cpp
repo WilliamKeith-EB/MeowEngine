@@ -11,15 +11,24 @@ GameObject::GameObject(const std::string& name)
 // TODO: delete children
 GameObject::~GameObject() {
 
+	for (Component* pComponent : m_pComponents) {
+
+		delete pComponent;
+	}
 }
 
 void GameObject::AddComponent(Component* pComponent) {
 
-	if (m_pScene) {
-	
-		auto pBuffer = pComponent;
-		pComponent = reinterpret_cast<Component*>(m_pScene->m_ComponentPool.Acquire(sizeof(pComponent)));
-		*pComponent = *pBuffer;
+	TransformComponent* isTransform = dynamic_cast<TransformComponent*>(pComponent);
+	if (isTransform)
+	{
+		if (m_pTransformComponent) {
+
+			LOGGER.LogWarning(m_Name + " already has a transformComponent");
+			return;
+		}
+
+		m_pTransformComponent = isTransform;
 	}
 
 	m_pComponents.push_back(pComponent);
@@ -30,10 +39,11 @@ void GameObject::AddComponent(RenderComponent* pComponent) {
 
 	if (m_pScene) {
 
-		m_pScene->AddRenderComponent(pComponent);
+		pComponent = m_pScene->AddRenderComponent(pComponent);
 	}
 
 	m_pRenderComponent = pComponent;
+	m_pRenderComponent->AddToGameObject(this);
 }
 
 void GameObject::AddToScene(Scene* pScene) {
@@ -42,15 +52,7 @@ void GameObject::AddToScene(Scene* pScene) {
 
 	if (m_pRenderComponent) {
 
-		m_pScene->m_pRenderComponents[m_pScene->m_NrOfRenderComponents] = *m_pRenderComponent;
-		m_pRenderComponent = &m_pScene->m_pRenderComponents[m_pScene->m_NrOfRenderComponents++];
-	}
-
-	for (Component*& pComponent : m_pComponents) {
-
-		auto pBuffer = pComponent;
-		pComponent = reinterpret_cast<Component*>(m_pScene->m_ComponentPool.Acquire(pComponent->GetMemSize()));
-		memcpy(pComponent, pBuffer, pBuffer->GetMemSize());
+		m_pScene->AddRenderComponent(m_pRenderComponent);
 	}
 
 	pScene->AddGameObject(this);
@@ -61,19 +63,10 @@ Scene* GameObject::GetScene() const {
 	return m_pScene;
 }
 
-void * GameObject::operator new(size_t size) {
+void GameObject::Update() {
 
-	return FRAMEALLOC.Acquire(size);
-}
+	for (Component* pComponent : m_pComponents) {
 
-void GameObject::operator delete(void* ptr) {
-	
-	if (!FRAMEALLOC.IsInStack(ptr))
-		((GameObject*)ptr)->GetScene()->RemoveGameObject((GameObject*)ptr);
-}
-
-template<>
-RenderComponent* GameObject::GetComponent<RenderComponent>() const {
-
-	return m_pRenderComponent;
+		pComponent->Update();
+	}
 }

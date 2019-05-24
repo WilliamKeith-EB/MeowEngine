@@ -8,12 +8,9 @@ public:
 	virtual ~Component() = default;
 
 	virtual void Update() = 0;
-	virtual int GetMemSize() = 0;
-
-	void* operator new(size_t size);
-	void operator delete(void* ptr);
 
 	void AddToGameObject(GameObject* pGameObject);
+	GameObject* GetGameObject() const { return m_pGameObject; }
 
 protected:
 	GameObject* m_pGameObject;

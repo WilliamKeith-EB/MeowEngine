@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+class GameObject;
+
 class MainScene final : public Scene
 {
 public:
@@ -12,5 +14,6 @@ public:
 
 private:
 	float m_TimePassed;
+	GameObject* m_pObject;
 };
 

@@ -1,39 +1,44 @@
 #include "pch.h"
 #include "Engine.h"
 #include "ConfigLoader.h"
-#include "DoubleLinkAllocator.h"
 #include "Game.h"
-
-#include <SDL.h>
 #include <chrono>
 
 void Engine::Initialize()
 {
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 
-		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+		LOGGER.LogError(SDL_GetError());
+		return;
 	}
 
+	// Use OpenGL 2.1
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
 	ConfigLoader configLoader{ "../Data/Config/" };
-	auto data = configLoader.GetConfigData();
+	ConfigData* pData = new ConfigData(configLoader.GetConfigData());
 	
-	StackAllocator* pFrameAllocator = new StackAllocator{ data.memory.frameAllocSize };
-	Locator::Provide(pFrameAllocator);
+	Locator::Provide(pData);
 
 	m_pWindow = SDL_CreateWindow(
 
-		data.window.title.c_str(),
+		pData->window.title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		int(data.window.width),
-		int(data.window.height),
+		int(pData->window.width),
+		int(pData->window.height),
 		SDL_WINDOW_OPENGL
 	);
 
 	if (m_pWindow == nullptr) {
 
-		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
+		LOGGER.LogError(SDL_GetError());
+		return;
 	}
+
+
 
 	// make renderer and initialize window
 	m_Renderer.Initialize(m_pWindow);
@@ -41,10 +46,14 @@ void Engine::Initialize()
 
 void Engine::Cleanup() {
 
-	auto& frameAllocator = FRAMEALLOC;
-	delete &frameAllocator;
+	auto& configdata = CONFIGDATA;
+	delete &configdata;
+
+	m_Renderer.Cleanup();
 
 	SDL_DestroyWindow(m_pWindow);
+	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -58,11 +67,13 @@ void Engine::Run(Game* pGame) {
 	{
 		Time time{};
 		InputHandler inputHandler{};
-		SceneManager sceneManager{};
+		SceneManager sceneManager{m_Renderer};
+		StackAllocator frameAllocator{ CONFIGDATA.memory.frameAllocSize };
 
 		Locator::Provide(&time);
 		Locator::Provide(&inputHandler);
 		Locator::Provide(&sceneManager);
+		Locator::Provide(&frameAllocator);
 
 		pGame->LoadGame();
 
@@ -84,9 +95,11 @@ void Engine::Run(Game* pGame) {
 			// render
 			m_Renderer.Render();
 
+			SDL_GL_SwapWindow(m_pWindow);
+
 			previousTime = currentTime;
 		}
-
-		Cleanup();
 	}
+
+	Cleanup();
 }

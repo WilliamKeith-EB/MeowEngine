@@ -1,6 +1,7 @@
 #pragma once
 class Component;
 class RenderComponent;
+class TransformComponent;
 
 class GameObject final
 {
@@ -13,14 +14,27 @@ public:
 	template<class T>
 	T* GetComponent() const;
 
+	template<>
+	RenderComponent* GetComponent<RenderComponent>() const {
+
+		return m_pRenderComponent;
+	}
+
+	template<>
+	TransformComponent* GetComponent<TransformComponent>() const {
+
+		return m_pTransformComponent;
+	}
+
 	void AddToScene(Scene* pScene);
 	Scene* GetScene() const;
+	const std::string& GetName() const { return m_Name; }
 
-	void* operator new(size_t size);
-	void operator delete(void* ptr);
+	void Update();
 
 private: 
 	std::vector<Component*> m_pComponents;
+	TransformComponent* m_pTransformComponent;
 	RenderComponent* m_pRenderComponent;
 	std::string m_Name;
 	Scene* m_pScene;
