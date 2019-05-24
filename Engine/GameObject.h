@@ -9,7 +9,7 @@ public:
 	GameObject(const std::string& name = "");
 	~GameObject();
 
-	void AddComponent(Component* pComponent);
+	Component* AddComponent(Component* pComponent);
 	void AddComponent(RenderComponent* pRenderComponent);
 	template<class T>
 	T* GetComponent() const;

@@ -19,6 +19,11 @@ void MainScene::Initialize() {
 	background->AddComponent(new RenderComponent(tex));
 	background->GetComponent<TransformComponent>()->SetRenderDepth(0.8f);
 
+	m_pCam01 = &CAMERA;
+	auto cam02 = new GameObject("Cam02");
+	m_pCam02 = (CameraComponent*) cam02->AddComponent(new CameraComponent({ 0,0.5f,0,1 }));
+	cam02->AddToScene(this);
+
 	//background = new GameObject("Background");
 	//background->AddToScene(this);
 	//Texture2D backgroundTexture{ "../Data/background.jpg" };
@@ -80,5 +85,6 @@ void MainScene::Update() {
 
 		m_TimePassed -= 1.0f;
 		LOGGER.LogInfo(std::to_string(TIME.GetFPS()));
+		Locator::Provide(m_pCam02);
 	}
 }

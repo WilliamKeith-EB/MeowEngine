@@ -14,6 +14,6 @@ public:
 
 private:
 	float m_TimePassed;
-	GameObject* m_pObject;
+	CameraComponent* m_pCam01, *m_pCam02;
 };
 

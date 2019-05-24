@@ -17,7 +17,7 @@ GameObject::~GameObject() {
 	}
 }
 
-void GameObject::AddComponent(Component* pComponent) {
+Component* GameObject::AddComponent(Component* pComponent) {
 
 	TransformComponent* isTransform = dynamic_cast<TransformComponent*>(pComponent);
 	if (isTransform)
@@ -25,7 +25,7 @@ void GameObject::AddComponent(Component* pComponent) {
 		if (m_pTransformComponent) {
 
 			LOGGER.LogWarning(m_Name + " already has a transformComponent");
-			return;
+			return nullptr;
 		}
 
 		m_pTransformComponent = isTransform;
@@ -33,6 +33,8 @@ void GameObject::AddComponent(Component* pComponent) {
 
 	m_pComponents.push_back(pComponent);
 	pComponent->AddToGameObject(this);
+
+	return pComponent;
 }
 
 void GameObject::AddComponent(RenderComponent* pComponent) {
