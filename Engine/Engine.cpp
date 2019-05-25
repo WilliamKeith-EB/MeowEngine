@@ -61,9 +61,11 @@ void meow::Engine::Run(Game* pGame) {
 
 	Logger logger = Logger();
 	ResourceManager resourceManager{ "../Data/" };
+	DebugRenderer debugRenderer{};
 
 	Locator::Provide(&logger);
 	Locator::Provide(&resourceManager);
+	Locator::Provide(&debugRenderer);
 
 	Initialize();
 

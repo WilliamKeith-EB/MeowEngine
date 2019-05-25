@@ -4,6 +4,7 @@ namespace meow {
 
 	class RenderComponent;
 	class GameObject;
+	class ColliderComponent;
 
 	class Scene
 	{
@@ -27,6 +28,7 @@ namespace meow {
 		std::string m_Name;
 
 		std::vector<GameObject*> m_pGameObjects;
+		std::vector<ColliderComponent*> m_pColliders;
 
 		RenderComponent* m_pRenderComponents;
 		int m_NrOfRenderComponents;
@@ -36,6 +38,8 @@ namespace meow {
 
 		void AddGameObject(GameObject* pObject);
 		void RemoveGameObject(GameObject* pObject);
+		void AddCollider(ColliderComponent* pCollider);
+		void RemoveCollider(ColliderComponent* pCollider);
 	};
 
 }

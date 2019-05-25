@@ -3,12 +3,12 @@
 
 
 meow::GameObject::GameObject(const std::string& name)
-	: m_Name{ name } {
+	: m_Name{ name }
+	, m_LogWarnings{ true } {
 
 	AddComponent(new TransformComponent());
 }
 
-// TODO: delete children
 meow::GameObject::~GameObject() {
 
 	for (Component* pComponent : m_pComponents) {
@@ -29,6 +29,15 @@ meow::Component* meow::GameObject::AddComponent(Component* pComponent) {
 		}
 
 		m_pTransformComponent = isTransform;
+	}
+
+	ColliderComponent* isCollider = dynamic_cast<ColliderComponent*>(pComponent);
+	if (isCollider) {
+
+		if (m_pScene) {
+
+			m_pScene->AddCollider(isCollider);
+		}
 	}
 
 	m_pComponents.push_back(pComponent);
@@ -57,7 +66,14 @@ void meow::GameObject::AddToScene(Scene* pScene) {
 		m_pScene->AddRenderComponent(m_pRenderComponent);
 	}
 
-	pScene->AddGameObject(this);
+	m_LogWarnings = false;
+	if (auto col = GetComponent<ColliderComponent>()) {
+
+		m_pScene->AddCollider(col);
+	}
+	m_LogWarnings = true;
+
+	m_pScene->AddGameObject(this);
 }
 
 meow::Scene* meow::GameObject::GetScene() const {

@@ -195,9 +195,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="ConfigLoader.h" />
+    <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -217,8 +220,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.dll" "$(OutputPath)" /R /Y</C
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
+    <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputHandler.cpp" />

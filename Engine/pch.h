@@ -39,6 +39,8 @@
 #include "ConfigLoader.h"
 #include "Texture2D.h"
 #include "ResourceManager.h"
+#include "CollisionListener.h"
+#include "DebugRenderer.h"
 
 #pragma warning(push)
 #pragma warning (disable:4201)

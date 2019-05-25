@@ -9,6 +9,7 @@ meow::StackAllocator* meow::Locator::m_pFrameAllocator{};
 meow::ResourceManager* meow::Locator::m_pResourceManager{};
 meow::ConfigData* meow::Locator::m_pConfigData{};
 meow::CameraComponent* meow::Locator::m_pCameraComponent{};
+meow::DebugRenderer* meow::Locator::m_pDebugRenderer{};
 
 meow::Time& meow::Locator::GetTime() {
 
@@ -58,6 +59,12 @@ meow::CameraComponent& meow::Locator::GetCamera() {
 	return *m_pCameraComponent;
 }
 
+meow::DebugRenderer& meow::Locator::GetDebugRenderer() {
+	
+	assert(m_pDebugRenderer);
+	return *m_pDebugRenderer;
+}
+
 void  meow::Locator::Provide(Time* pTime) {
 
 	m_pTime = pTime;
@@ -96,4 +103,9 @@ void  meow::Locator::Provide(ConfigData* pConfigData) {
 void meow::Locator::Provide(CameraComponent* pCameraComponent) {
 
 	m_pCameraComponent = pCameraComponent;
+}
+
+void meow::Locator::Provide(DebugRenderer* pDebugRenderer) {
+
+	m_pDebugRenderer = pDebugRenderer;
 }

@@ -42,6 +42,20 @@ void MainScene::Initialize() {
 	logo->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("logo.png")));
 	logo->GetComponent<TransformComponent>()->SetPosition({ CONFIGDATA.window.width / 2, CONFIGDATA.window.height / 2 });
 	logo->GetComponent<TransformComponent>()->SetRenderDepth(0.5f);
+	auto col = new ColliderComponent(glm::vec2{ 0,0 }, logo->GetComponent<TransformComponent>()->GetSize(), true);
+	logo->AddComponent(col);
+	DEBUGRENDERER.AddCollider(col);
+
+	m_pObject = logo;
+
+	GameObject* player = new GameObject("Player");
+	player->AddToScene(this);
+	player->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("logo.png")));
+	auto t = player->GetComponent<TransformComponent>();
+	t->SetPosition({ CONFIGDATA.window.width / 2, t->GetSize().y / 2 });
+	col = new ColliderComponent({ 0,0 }, t->GetSize(), false);
+	player->AddComponent(col);
+	DEBUGRENDERER.AddCollider(col);
 
 	//background = new GameObject("Background");
 	//background->AddToScene(this);
@@ -91,8 +105,13 @@ void MainScene::Initialize() {
 void MainScene::Update() {
 	using namespace meow;
 
-	CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Rotate(360.0f * TIME.GetDeltaT());
-	CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Scale(glm::vec2(1.0f, 1.0f) + 0.5f * TIME.GetDeltaT());
+	//CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Rotate(360.0f * TIME.GetDeltaT());
+	//CAMERA.GetGameObject()->GetComponent<TransformComponent>()->Scale(glm::vec2(1.0f, 1.0f) + 0.5f * TIME.GetDeltaT());
+
+	//m_pObject->GetComponent<TransformComponent>()->Scale(glm::vec2{ 1, 1 } + 0.1f * TIME.GetDeltaT());
+
+	auto obj = FindGameObjectWithName("Player");
+	obj->GetComponent<TransformComponent>()->Move(glm::vec2{ 0, 10 } * TIME.GetDeltaT());
 
 	m_TimePassed += TIME.GetDeltaT();
 

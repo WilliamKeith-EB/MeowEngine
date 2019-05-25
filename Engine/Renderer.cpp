@@ -65,6 +65,8 @@ void meow::Renderer::Render() {
 		m_pRenderComponents[i].Render();
 	}
 
+	DEBUGRENDERER.Render();
+
 	glPopMatrix();
 }
 

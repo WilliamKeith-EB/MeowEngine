@@ -8,6 +8,7 @@
 #define RESOURCEMANAGER meow::Locator::GetResourceManager()
 #define CONFIGDATA meow::Locator::GetConfigData()
 #define CAMERA meow::Locator::GetCamera()
+#define DEBUGRENDERER meow::Locator::GetDebugRenderer()
 
 namespace meow {
 
@@ -18,6 +19,7 @@ namespace meow {
 	class StackAllocator;
 	class ResourceManager;
 	class CameraComponent;
+	class DebugRenderer;
 	struct ConfigData;
 
 	class Locator final {
@@ -32,6 +34,7 @@ namespace meow {
 		static ResourceManager& GetResourceManager();
 		static ConfigData& GetConfigData();
 		static CameraComponent& GetCamera();
+		static DebugRenderer& GetDebugRenderer();
 
 		static void Provide(Time* pTime);
 		static void Provide(InputHandler* pInputHandler);
@@ -41,6 +44,7 @@ namespace meow {
 		static void Provide(ResourceManager* pResourceManager);
 		static void Provide(ConfigData* pConfigData);
 		static void Provide(CameraComponent* pCameraComponent);
+		static void Provide(DebugRenderer* pDebugRenderer);
 	private:
 		Locator() = default;
 		~Locator() = default;
@@ -53,6 +57,7 @@ namespace meow {
 		static ResourceManager* m_pResourceManager;
 		static ConfigData* m_pConfigData;
 		static CameraComponent* m_pCameraComponent;
+		static DebugRenderer* m_pDebugRenderer;
 	};
 }
 

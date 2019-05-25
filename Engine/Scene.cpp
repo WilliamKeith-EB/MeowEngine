@@ -38,6 +38,15 @@ void meow::Scene::RootInitialize() {
 
 void meow::Scene::RootUpdate() {
 
+	// do collision
+	for (unsigned int i{}; i < m_pColliders.size() - 1; ++i) {
+
+		for (unsigned int j{ i + 1 }; j < m_pColliders.size(); ++j) {
+
+			m_pColliders[i]->CheckCollision(m_pColliders[j]);
+		}
+	}
+
 	for (GameObject* pObject : m_pGameObjects) {
 
 		pObject->Update();
@@ -88,4 +97,14 @@ void meow::Scene::AddGameObject(GameObject* pObject) {
 void meow::Scene::RemoveGameObject(GameObject* pObject) {
 
 	m_pGameObjects.erase(std::remove(m_pGameObjects.begin(), m_pGameObjects.end(), pObject), m_pGameObjects.end());
+}
+
+void meow::Scene::AddCollider(ColliderComponent* pCollider) {
+
+	m_pColliders.push_back(pCollider);
+}
+
+void meow::Scene::RemoveCollider(ColliderComponent* pCollider) {
+
+	m_pColliders.erase(std::remove(m_pColliders.begin(), m_pColliders.end(), pCollider), m_pColliders.end());
 }

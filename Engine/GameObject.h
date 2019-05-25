@@ -41,6 +41,7 @@ namespace meow {
 		RenderComponent* m_pRenderComponent;
 		std::string m_Name;
 		Scene* m_pScene;
+		bool m_LogWarnings;
 	};
 
 }
@@ -55,7 +56,8 @@ T* meow::GameObject::GetComponent() const {
 			return pActual;
 	}
 
-	LOGGER.LogError(m_Name + " doesn't have a component of type " + typeid(T).name());
-
+	if (m_LogWarnings)
+		LOGGER.LogWarning(m_Name + " doesn't have a component of type " + typeid(T).name());
+	
 	return nullptr;
 }
