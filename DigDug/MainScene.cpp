@@ -18,7 +18,7 @@ void MainScene::Initialize() {
 
 	auto background = new GameObject("Background");
 	background->AddToScene(this);
-	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("background.jpg")));
+	background->AddComponent(new RenderComponent(RESOURCEMANAGER.GetTexture("background.png")));
 	auto transform = background->GetComponent<TransformComponent>();
 	transform->SetAnchor({ 0, 0 });
 	transform->SetRenderDepth(1.0f);

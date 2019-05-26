@@ -60,10 +60,11 @@ void meow::Engine::Cleanup() {
 void meow::Engine::Run(Game* pGame) {
 
 	Logger logger = Logger();
+	Locator::Provide(&logger);
+
 	ResourceManager resourceManager{ "../Data/" };
 	DebugRenderer debugRenderer{};
-
-	Locator::Provide(&logger);
+	
 	Locator::Provide(&resourceManager);
 	Locator::Provide(&debugRenderer);
 

@@ -3,7 +3,7 @@ MEOW
 
 This is the meow engine.
 Ewout Buyck 2DAE01
-git repo: 
+git repo: https://github.com/WilliamKeith-EB/MeowEngine
 
 Sadly it is not complete but these are the features currently implemented:
 

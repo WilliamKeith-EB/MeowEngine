@@ -11,10 +11,13 @@ meow::ResourceManager::ResourceManager(const std::string& folder)
 		LOGGER.LogError(std::string("Couldn't initialize support for png images: ") + SDL_GetError());
 	}
 
+	// somehow this doesn't work on 64 bit
+#ifndef _WIN64
 	if ((IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG) != IMG_INIT_JPG){
 
 		LOGGER.LogError(std::string("Couldn't initialize support for jpg images: ") + SDL_GetError());
 	}
+#endif
 
 	if (TTF_Init() != 0) {
 
