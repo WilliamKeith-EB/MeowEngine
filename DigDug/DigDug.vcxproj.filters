@@ -21,12 +21,18 @@
     <ClInclude Include="MainScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="DigDugComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DigDug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DigDugComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

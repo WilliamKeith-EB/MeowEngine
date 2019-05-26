@@ -18,7 +18,6 @@ public:
 
 private:
 	float m_TimePassed;
-	meow::GameObject* m_pObject;
-	meow::CameraComponent* m_pCam01, *m_pCam02;
+	meow::GameObject* m_pAperture;
 };
 

@@ -11,16 +11,25 @@ meow::DebugRenderer::DebugRenderer()
 
 void meow::DebugRenderer::AddCollider(ColliderComponent* pCollider) {
 
+#ifdef _DEBUG
 	m_pColliders.push_back(pCollider);
+#else
+	UNREFERENCED_PARAMETER(pCollider);
+#endif
 }
 
 void meow::DebugRenderer::RemoveCollider(ColliderComponent* pCollider) {
 
+#ifdef _DEBUG
 	m_pColliders.erase(std::remove(m_pColliders.begin(), m_pColliders.end(), pCollider), m_pColliders.end());
+#else
+	UNREFERENCED_PARAMETER(pCollider);
+#endif
 }
 
 void meow::DebugRenderer::Render() {
 
+#ifdef _DEBUG
 	glColor4f(1.0f, 0.0f, 1.0f, 0.8f);
 
 	glm::vec2 pos, dim;
@@ -38,4 +47,5 @@ void meow::DebugRenderer::Render() {
 		}
 		glEnd();
 	}
+#endif
 }

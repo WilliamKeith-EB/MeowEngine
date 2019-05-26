@@ -39,9 +39,9 @@ void meow::Scene::RootInitialize() {
 void meow::Scene::RootUpdate() {
 
 	// do collision
-	for (unsigned int i{}; i < m_pColliders.size() - 1; ++i) {
+	for (int i{}; i < int(m_pColliders.size()) - 1; ++i) {
 
-		for (unsigned int j{ i + 1 }; j < m_pColliders.size(); ++j) {
+		for (int j{ i + 1 }; j < int(m_pColliders.size()); ++j) {
 
 			m_pColliders[i]->CheckCollision(m_pColliders[j]);
 		}

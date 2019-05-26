@@ -1,5 +1,7 @@
 #pragma once
 
+#include "StackAllocator.h"
+
 #define LOGGER meow::Locator::GetLogger()
 #define INPUT meow::Locator::GetInputHandler()
 #define TIME meow::Locator::GetTime()
@@ -16,7 +18,6 @@ namespace meow {
 	class InputHandler;
 	class Logger;
 	class SceneManager;
-	class StackAllocator;
 	class ResourceManager;
 	class CameraComponent;
 	class DebugRenderer;
@@ -61,5 +62,5 @@ namespace meow {
 	};
 }
 
-
+void* operator new(size_t size, meow::StackAllocator& frameAllocator); 
 

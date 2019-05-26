@@ -18,24 +18,36 @@ meow::Logger::~Logger() {
 
 void meow::Logger::LogError(const std::string& error)
 {
+#ifdef _DEBUG
 	SetConsoleTextAttribute(m_hConsole, m_ErrorColor);
 	
 	std::tm tm = GetTime();
 	std::cout << "<" << std::put_time(&tm, "%X") << ">" << " ERROR:\t" << error << std::endl << std::endl;
+#else
+	UNREFERENCED_PARAMETER(error);
+#endif
 }
 
 void meow::Logger::LogWarning(const std::string& warning) {
 
+#ifdef _DEBUG
 	SetConsoleTextAttribute(m_hConsole, m_WarningColor);
 	std::tm tm = GetTime();
 	std::cout << "<" << std::put_time(&tm, "%X") << ">" << " WARNING:\t" << warning << std::endl << std::endl;
+#else
+	UNREFERENCED_PARAMETER(warning);
+#endif
 }
 
 void meow::Logger::LogInfo(const std::string& info) {
 
+#ifdef _DEBUG
 	SetConsoleTextAttribute(m_hConsole, m_InfoColor);
 	std::tm tm = GetTime();
 	std::cout << "<" << std::put_time(&tm, "%X") << ">" << " INFO:\t" << info << std::endl << std::endl;
+#else
+	UNREFERENCED_PARAMETER(info);
+#endif
 }
 
 std::tm meow::Logger::GetTime() {

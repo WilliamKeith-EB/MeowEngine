@@ -4,8 +4,7 @@ namespace meow {
 
 	class CollisionListener {
 
-		virtual void OnTriggerEnter() {}
-		virtual void OnTriggerExit() {}
+	public:
 		virtual void OnCollision() {}
 	};
 }

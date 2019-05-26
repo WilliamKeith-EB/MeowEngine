@@ -109,3 +109,8 @@ void meow::Locator::Provide(DebugRenderer* pDebugRenderer) {
 
 	m_pDebugRenderer = pDebugRenderer;
 }
+
+void* operator new(size_t size, meow::StackAllocator& frameAllocator) {
+
+	return frameAllocator.Acquire(size);
+}

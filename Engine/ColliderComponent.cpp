@@ -45,7 +45,13 @@ void meow::ColliderComponent::CheckCollision(ColliderComponent* pOther) {
 		pos1.y < pos2.y + dim2.y &&
 		pos1.y + dim1.y > pos2.y) {
 
-		LOGGER.LogInfo("COLLISION");
+		//LOGGER.LogInfo("COLLISION");
+
+		if (m_pListener)
+			m_pListener->OnCollision();
+
+		if (pOther->m_pListener)
+			pOther->m_pListener->OnCollision();
 
 		// collision
 		if (!m_IsTrigger && !pOther->IsTrigger()) {

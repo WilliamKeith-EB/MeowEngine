@@ -18,7 +18,7 @@ namespace meow {
 			int maxNumberOfRenderComponents;
 			int gameObjectArrayStartSize;
 		} memory;
-		// run with or without console
+		
 	};
 
 	class ConfigLoader final
