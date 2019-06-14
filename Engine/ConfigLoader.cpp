@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ConfigLoader.h"
+#include "Locator.h"
+#include "Logger.h"
 #include <sstream>
 
 meow::ConfigLoader::ConfigLoader(const std::string& folder)
@@ -36,9 +38,19 @@ meow::ConfigLoader::ConfigLoader(const std::string& folder)
 	m_pData->memory.gameObjectArrayStartSize = std::stoi(m_Buffer.data());
 }
 
-meow::ConfigData meow::ConfigLoader::GetConfigData() {
+meow::ConfigLoader::~ConfigLoader()
+{
+}
 
-	return *m_pData;
+void meow::ConfigLoader::CreateConfigFile(const std::string& file) {
+
+	auto succes = m_ConfigFiles.emplace(std::make_pair(file, std::unordered_map<std::string, std::string>{}));
+	
+	if (!succes.second) {
+
+		LOGGER.LogWarning("ConfigFile: " + file + " could not be created, because a file with that name already exists");
+		return;
+	}
 }
 
 void meow::ConfigLoader::LoadConfigData(const std::string& title, const std::string& data, const std::string& defaultValue, const std::string& filePath) {
@@ -54,7 +66,4 @@ void meow::ConfigLoader::LoadConfigData(const std::string& title, const std::str
 }
 
 
-meow::ConfigLoader::~ConfigLoader()
-{
-	delete m_pData;
-}
+

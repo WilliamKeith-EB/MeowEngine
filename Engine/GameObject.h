@@ -5,6 +5,7 @@ namespace meow {
 	class Component;
 	class RenderComponent;
 	class TransformComponent;
+	class Scene;
 
 	class GameObject final
 	{

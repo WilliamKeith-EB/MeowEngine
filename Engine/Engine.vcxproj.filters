@@ -36,11 +36,11 @@
     <Filter Include="Engine Files\Listeners">
       <UniqueIdentifier>{3f5481c6-1a04-41d2-869d-19a64016d500}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Files\Headers">
+      <UniqueIdentifier>{1a55eeaf-2207-4712-90e9-c1cc316c3625}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Engine Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Engine Files\Core</Filter>
     </ClCompile>
@@ -101,11 +101,11 @@
     <ClCompile Include="DebugRenderer.cpp">
       <Filter>Engine Files\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Engine Files\Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Engine Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Engine Files\Core</Filter>
     </ClInclude>
@@ -134,9 +134,6 @@
       <Filter>Engine Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>Engine Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components.h">
       <Filter>Engine Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -171,6 +168,18 @@
     </ClInclude>
     <ClInclude Include="DebugRenderer.h">
       <Filter>Engine Files\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Engine Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Engine Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeowEngine.h">
+      <Filter>Engine Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WritableType.h">
+      <Filter>Engine Files\Content</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
