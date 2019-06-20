@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "DebugRenderer.h"
+#include "ColliderComponent.h"
 #include <algorithm>
 
 meow::DebugRenderer::DebugRenderer() 

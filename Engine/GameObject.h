@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Locator.h"
+#include "Logger.h"
+
 namespace meow {
 
 	class Component;

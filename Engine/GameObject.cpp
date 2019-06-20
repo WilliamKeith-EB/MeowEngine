@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "GameObject.h"
-
+#include "Logger.h"
+#include "Locator.h"
+#include "TransformComponent.h"
+#include "ColliderComponent.h"
+#include "Scene.h"
+#include "RenderComponent.h"
 
 meow::GameObject::GameObject(const std::string& name)
 	: m_Name{ name }
@@ -15,6 +20,8 @@ meow::GameObject::~GameObject() {
 
 		delete pComponent;
 	}
+
+	delete m_pRenderComponent;
 }
 
 meow::Component* meow::GameObject::AddComponent(Component* pComponent) {
@@ -48,13 +55,14 @@ meow::Component* meow::GameObject::AddComponent(Component* pComponent) {
 
 void meow::GameObject::AddComponent(RenderComponent* pComponent) {
 
-	if (m_pScene) {
-
-		pComponent = m_pScene->AddRenderComponent(pComponent);
-	}
-
 	m_pRenderComponent = pComponent;
 	m_pRenderComponent->AddToGameObject(this);
+
+	if (m_pScene) {
+
+		auto index = m_pScene->AddRenderComponent(pComponent->m_pRenderComponent);
+		pComponent->SetRenderComponentIndex(index);
+	}
 }
 
 void meow::GameObject::AddToScene(Scene* pScene) {
@@ -63,7 +71,8 @@ void meow::GameObject::AddToScene(Scene* pScene) {
 
 	if (m_pRenderComponent) {
 
-		m_pScene->AddRenderComponent(m_pRenderComponent);
+		auto index = m_pScene->AddRenderComponent(m_pRenderComponent->m_pRenderComponent);
+		m_pRenderComponent->SetRenderComponentIndex(index);
 	}
 
 	m_LogWarnings = false;

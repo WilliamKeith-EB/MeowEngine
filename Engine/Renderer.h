@@ -1,10 +1,9 @@
 #pragma once
+#include "RenderComponent.h"
 
 struct SDL_Window;
 
 namespace meow {
-
-	class RenderComponent;
 
 	class Renderer
 	{
@@ -17,16 +16,17 @@ namespace meow {
 
 		void Cleanup();
 
-		void SetRenderComponents(RenderComponent* pRenderComponents, int& nrOfActiveRenderComponents);
+		void SetRenderComponents(RenderComponent_Internal* pRenderComponents, int& nrOfActiveRenderComponents, std::vector<std::pair<RenderComponent_Internal*, bool>>* pRenderComponentTable);
 	private:
 		SDL_GLContext m_Context;
 		int* m_pNrOfActiveRenderComponents;
-		RenderComponent* m_pRenderComponents;
+		RenderComponent_Internal* m_pRenderComponents;
+		std::vector<std::pair<RenderComponent_Internal*, bool>>* m_pRenderComponentTable;
 
 		void QuickSortComponents(int low, int high);
 		int PartitionComponents(int low, int high);
-		float GetDepth(const RenderComponent& renderComponent) const;
-		void Swap(RenderComponent* a, RenderComponent* b);
+		float GetDepth(const RenderComponent_Internal& renderComponent) const;
+		void Swap(RenderComponent_Internal* a, RenderComponent_Internal* b);
 
 	};
 }

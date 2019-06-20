@@ -1,16 +1,23 @@
 #include "pch.h"
 #include "Scene.h"
+#include "ColliderComponent.h"
+#include "CameraComponent.h"
+#include "GameObject.h"
+#include "TransformComponent.h"
+#include "Locator.h"
+#include "ConfigLoader.h"
 #include <algorithm>
 
 
 meow::Scene::Scene(const std::string& name)
 	: m_Name{ name }
-	, m_pRenderComponents{ (RenderComponent*) malloc(sizeof(RenderComponent) * CONFIGDATA.memory.maxNumberOfRenderComponents) }
-	, m_pGameObjects{} {
+	, m_pRenderComponents{ (RenderComponent_Internal*) malloc(sizeof(RenderComponent_Internal) * CONFIGDATA.memory.maxNumberOfRenderComponents) }
+	, m_pGameObjects{} 
+	, m_pRenderComponentTable{ new std::vector<std::pair<RenderComponent_Internal*, bool>>() }
+	, m_MaxNrRenderComponents{ CONFIGDATA.memory.maxNumberOfRenderComponents }{
 
 	m_pGameObjects.reserve(CONFIGDATA.memory.gameObjectArrayStartSize);
 }
-
 
 meow::Scene::~Scene() {
 
@@ -19,6 +26,8 @@ meow::Scene::~Scene() {
 
 		delete pObject;
 	}
+
+	delete m_pRenderComponentTable;
 }
 
 void meow::Scene::RootInitialize() {
@@ -76,17 +85,83 @@ meow::GameObject* meow::Scene::FindGameObjectWithName(const std::string& name) {
 	return nullptr;
 }
 
-meow::RenderComponent* meow::Scene::AddRenderComponent(RenderComponent* pRenderComponent) {
+RenderComponentIndex meow::Scene::AddRenderComponent(RenderComponent_Internal* pRenderComponent) {
 
-	memcpy(&m_pRenderComponents[m_NrOfRenderComponents++], pRenderComponent, sizeof(RenderComponent));
-	return &m_pRenderComponents[m_NrOfRenderComponents - 1];
+	assert(m_NrOfRenderComponents < m_MaxNrRenderComponents);
+	memcpy(&m_pRenderComponents[m_NrOfRenderComponents], pRenderComponent, sizeof(RenderComponent_Internal));
+	RenderComponentIndex index = GetFreePlace();
+	m_pRenderComponentTable->at(index).first = &m_pRenderComponents[m_NrOfRenderComponents++];
+
+#ifdef _DEBUG
+		if (m_NrOfRenderComponents == m_MaxNrRenderComponents)
+			LOGGER.LogWarning("Array of render components is full");
+#endif
+
+	return index;
 }
 
-void meow::Scene::RemoveRenderComponent(RenderComponent* pRenderComponent) {
+void meow::Scene::RemoveRenderComponent(RenderComponentIndex renderComponentIndex) {
 
-	auto buffer = *pRenderComponent;
+	auto pRenderComponent = GetRenderComponent(renderComponentIndex);
+	m_pRenderComponentTable->at(renderComponentIndex).second = false;
 	*pRenderComponent = m_pRenderComponents[m_NrOfRenderComponents - 1];
-	m_pRenderComponents[--m_NrOfRenderComponents] = buffer;
+	m_pRenderComponentTable->at(GetIndex(&m_pRenderComponents[--m_NrOfRenderComponents])).first = pRenderComponent;
+}
+
+void meow::Scene::RemoveRenderComponent(RenderComponent_Internal* pRenderComponent)
+{
+	auto renderComponentIndex = GetIndex(pRenderComponent);
+	m_pRenderComponentTable->at(renderComponentIndex).second = false;
+	*pRenderComponent = m_pRenderComponents[m_NrOfRenderComponents - 1];
+	m_pRenderComponentTable->at(GetIndex(&m_pRenderComponents[--m_NrOfRenderComponents])).first = pRenderComponent;
+}
+
+RenderComponentIndex meow::Scene::GetIndex(RenderComponent_Internal* pRenderComponent) const {
+
+	auto it = std::find_if(m_pRenderComponentTable->cbegin(), m_pRenderComponentTable->cend(), 
+		[pRenderComponent](const std::pair<RenderComponent_Internal*, bool>& p) {
+
+		return p.first == pRenderComponent;
+	});
+	if (it == m_pRenderComponentTable->cend()) {
+#ifdef _DEBUG
+		LOGGER.LogWarning("RenderComponent not found");
+#endif
+
+		return RenderComponentIndex(-1);
+	}
+	
+	return RenderComponentIndex(it - m_pRenderComponentTable->cbegin());
+}
+
+RenderComponentIndex meow::Scene::GetFreePlace() {
+
+	auto it =  std::find_if(m_pRenderComponentTable->begin(), m_pRenderComponentTable->end(),
+		[](const std::pair<RenderComponent_Internal*, bool>& p) {
+
+		return !p.second;
+	});
+
+	if (it == m_pRenderComponentTable->end()) {
+
+		m_pRenderComponentTable->push_back(std::make_pair(nullptr, true));
+		return RenderComponentIndex(m_pRenderComponentTable->size() - 1);
+	}
+
+	it->second = true;
+	return RenderComponentIndex(it - m_pRenderComponentTable->begin());
+}
+
+meow::RenderComponent_Internal* meow::Scene::GetRenderComponent(RenderComponentIndex index)
+{
+
+	assert(index < m_pRenderComponentTable->size());
+#ifdef _DEBUG
+
+	if (!m_pRenderComponentTable->at(index).second)
+		LOGGER.LogWarning("accessing invalid index");
+#endif
+	return m_pRenderComponentTable->at(index).first;
 }
 
 void meow::Scene::AddGameObject(GameObject* pObject) {

@@ -1,14 +1,15 @@
 #pragma once
+#include "RenderComponent.h"
 
 namespace meow {
 
-	class RenderComponent;
 	class GameObject;
 	class ColliderComponent;
 
 	class Scene
 	{
 		friend class RenderComponent;
+		friend class RenderComponent_Internal;
 		friend class GameObject;
 		friend class SceneManager;
 
@@ -30,11 +31,17 @@ namespace meow {
 		std::vector<GameObject*> m_pGameObjects;
 		std::vector<ColliderComponent*> m_pColliders;
 
-		RenderComponent* m_pRenderComponents;
+		RenderComponent_Internal* m_pRenderComponents;
 		int m_NrOfRenderComponents;
+		const int m_MaxNrRenderComponents;
+		std::vector<std::pair<RenderComponent_Internal*, bool>>* m_pRenderComponentTable;
 
-		RenderComponent* AddRenderComponent(RenderComponent* pRenderComponent);
-		void RemoveRenderComponent(RenderComponent* pRenderComponent);
+		RenderComponentIndex AddRenderComponent(RenderComponent_Internal* pRenderComponent);
+		void RemoveRenderComponent(RenderComponentIndex renderComponentIndex);
+		void RemoveRenderComponent(RenderComponent_Internal* pRenderComponent);
+		RenderComponentIndex GetIndex(RenderComponent_Internal* pRenderComponent) const;
+		RenderComponentIndex GetFreePlace();
+		RenderComponent_Internal* GetRenderComponent(RenderComponentIndex index);
 
 		void AddGameObject(GameObject* pObject);
 		void RemoveGameObject(GameObject* pObject);

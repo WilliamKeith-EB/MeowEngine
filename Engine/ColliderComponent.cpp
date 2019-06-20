@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "ColliderComponent.h"
+#include "GameObject.h"
+#include "TransformComponent.h"
+#include "CollisionListener.h"
 
 meow::ColliderComponent::ColliderComponent(const glm::vec2& localPosition, const glm::vec2& dimensions, bool isStatic, CollisionListener* pListener, bool isTrigger)
 	: m_localPosition{ localPosition }

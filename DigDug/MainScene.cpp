@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MainScene.h"
 #include "DigDugComponent.h"
+#include "MeowEngine.h"
 
 MainScene::MainScene()
 	: Scene( "Main" )

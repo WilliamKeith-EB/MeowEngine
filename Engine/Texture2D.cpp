@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Texture2D.h"
-
+#include "Logger.h"
+#include "Locator.h"
 
 meow::Texture2D::Texture2D(const std::string& path)
 {

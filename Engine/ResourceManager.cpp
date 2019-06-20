@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "ResourceManager.h"
 #include <algorithm>
-
+#include "Logger.h"
+#include "Texture2D.h"
+#include "Locator.h"
 
 meow::ResourceManager::ResourceManager(const std::string& folder)
 	: m_Folder{ folder }

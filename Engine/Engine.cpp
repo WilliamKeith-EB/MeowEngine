@@ -3,6 +3,14 @@
 #include "ConfigLoader.h"
 #include "Game.h"
 #include <chrono>
+#include "ConfigLoader.h"
+#include "Logger.h"
+#include "Locator.h"
+#include "DebugRenderer.h"
+#include "SceneManager.h"
+#include "Time.h"
+#include "ResourceManager.h"
+#include "InputHandler.h"
 
 void meow::Engine::Initialize()
 {

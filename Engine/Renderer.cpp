@@ -1,5 +1,13 @@
 #include "pch.h"
 #include "Renderer.h"
+#include "Locator.h"
+#include "Logger.h"
+#include "CameraComponent.h"
+#include "ConfigLoader.h"
+#include "TransformComponent.h"
+#include "RenderComponent.h"
+#include "GameObject.h"
+#include "DebugRenderer.h"
 
 void meow::Renderer::Initialize(SDL_Window* pWindow) {
 
@@ -76,10 +84,11 @@ void meow::Renderer::Cleanup()
 	SDL_GL_DeleteContext(m_Context);
 }
 
-void meow::Renderer::SetRenderComponents(RenderComponent* pRenderComponents, int& nrOfActiveRenderComponents) {
+void meow::Renderer::SetRenderComponents(RenderComponent_Internal* pRenderComponents, int& nrOfActiveRenderComponents, std::vector<std::pair<RenderComponent_Internal*, bool>>* pRenderComponentTable) {
 
 	m_pRenderComponents = pRenderComponents;
 	m_pNrOfActiveRenderComponents = &nrOfActiveRenderComponents;
+	m_pRenderComponentTable = pRenderComponentTable;
 }
 
 /* This function takes last element as pivot, places
@@ -106,14 +115,14 @@ int meow::Renderer::PartitionComponents(int low, int high) {
 	return (i + 1);
 }
 
-float meow::Renderer::GetDepth(const RenderComponent& renderComponent) const {
+float meow::Renderer::GetDepth(const RenderComponent_Internal& renderComponent) const {
 
-	return renderComponent.GetGameObject()->GetComponent<TransformComponent>()->GetRenderDepth();
+	return renderComponent.m_pGameObject->GetComponent<TransformComponent>()->GetRenderDepth();
 }
 
-void meow::Renderer::Swap(RenderComponent* a, RenderComponent* b)
+void meow::Renderer::Swap(RenderComponent_Internal* a, RenderComponent_Internal* b)
 {
-	RenderComponent t = *a;
+	RenderComponent_Internal t = *a;
 	*a = *b;
 	*b = t;
 }

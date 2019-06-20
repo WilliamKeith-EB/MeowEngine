@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "StackAllocator.h"
-
+#include "Locator.h"
+#include "Logger.h"
 
 meow::StackAllocator::StackAllocator(size_t size)
 {
